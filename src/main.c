@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/05/20 14:10:29 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:54:27 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,12 @@
 //un main de la minishell
  int main(void)
  {
- char *input;
+ 	char *input;
 
-    while ((input = readline("minishell> ")) != NULL)
+    while ((input = readline("minishell>> ")))
     {
-        if (*input)
-            add_history(input); // Agrega el comando al historial
-
-        if (strcmp(input, "clear_history") == 0)
-            rl_clear_history(); // Limpia el historial si el usuario lo solicita
-
-        free(input);
+		add_history(input);
+		free(input);
     }
 	return(0);
  }
