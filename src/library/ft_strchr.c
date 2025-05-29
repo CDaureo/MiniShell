@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/05/29 19:14:19 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/05/29 19:18:06 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/05/29 19:19:38 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//un main de la minishell
-int main(int argc, char **argv, char **envp)
-{	
-	(void)argc;
-	(void)argv;
- 	t_minishell t_minishell;
-	t_minishell.envp = envp;
+char	*ft_strchr(const char *s, int c)
+{
+	int				i;
+	unsigned char	uc;
 
-    while ((t_minishell.input = readline("minishell>> ")))
-    {
-		if (t_minishell.input[0] == '\0')
+	uc = (unsigned char)c;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == uc)
 		{
-			free(t_minishell.input);
-			continue;
-		}	
-		add_history(t_minishell.input);
-		free(t_minishell.input);
-    }
-	return(0);
- }
+			return ((char *)(&s[i]));
+		}
+		else
+			i++;
+	}
+	if (uc == '\0')
+	{
+		return ((char *)(&s[i]));
+	}
+	return (NULL);
+}

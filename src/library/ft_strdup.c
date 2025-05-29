@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/05/29 19:14:19 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/05/29 19:26:35 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/05/29 19:26:47 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+char	*ft_strdup(const char *s)
+{
+	size_t	i;
+	char	*dupe;
+	size_t	size;
 
-//un main de la minishell
-int main(int argc, char **argv, char **envp)
-{	
-	(void)argc;
-	(void)argv;
- 	t_minishell t_minishell;
-	t_minishell.envp = envp;
-
-    while ((t_minishell.input = readline("minishell>> ")))
-    {
-		if (t_minishell.input[0] == '\0')
-		{
-			free(t_minishell.input);
-			continue;
-		}	
-		add_history(t_minishell.input);
-		free(t_minishell.input);
-    }
-	return(0);
- }
+	i = 0;
+	size = ft_strlen((char *)s);
+	dupe = malloc(size + 1 * sizeof(char));
+	if (dupe == NULL)
+	{
+		return (NULL);
+	}
+	while (i < size)
+	{
+		dupe[i] = s[i];
+		i++;
+	}
+	dupe[i] = '\0';
+	return (dupe);
+}
