@@ -6,11 +6,12 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:26:35 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/05/29 19:26:47 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:25:50 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
+
 char	*ft_strdup(const char *s)
 {
 	size_t	i;

@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/05/29 19:14:19 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:42:44 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,8 @@ int main(int argc, char **argv, char **envp)
 {	
 	(void)argc;
 	(void)argv;
- 	t_minishell t_minishell;
-	t_minishell.envp = envp;
-
-    while ((t_minishell.input = readline("minishell>> ")))
-    {
-		if (t_minishell.input[0] == '\0')
-		{
-			free(t_minishell.input);
-			continue;
-		}	
-		add_history(t_minishell.input);
-		free(t_minishell.input);
-    }
+ 	t_ms t_ms;
+	t_ms.envp = envp;
+	minishell_init(&t_ms);
 	return(0);
  }

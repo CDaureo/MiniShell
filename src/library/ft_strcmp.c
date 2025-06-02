@@ -6,11 +6,11 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:08:45 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/05/22 18:22:27 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:25:46 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

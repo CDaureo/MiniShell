@@ -8,7 +8,7 @@ SRC_ERRORS = $(SRC_FILES)/errors
 # Include the main source directory wildcard makes it easier to add new source files
 # without modifying the Makefile and the wildcard function to include all,
 # .c files in the utils and errors directories.
-SRC = ./src/main.c $(wildcard $(SRC_UTILS)/*.c) $(wildcard $(SRC_ERRORS)/*.c) \
+SRC = $(wildcard $(SRC_FILES)/*.c) $(wildcard $(SRC_UTILS)/*.c) $(wildcard $(SRC_ERRORS)/*.c) \
 $(wildcard $(SRC_LIBRARY)/*.c)
 OBJ = $(SRC:.c=.o)
 

@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:43:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/02 17:01:14 by cdaureo-         ###   ########.fr       */
+/*   Created: 2024/09/23 16:49:38 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/06/02 16:27:27 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void error_msg(const char *msg)
+int	ft_strlen(const char *str)
 {
-	perror(msg);
-	exit(E_FAILURE);
+	int	counter;
+
+	counter = 0;
+	while (str[counter] != '\0')
+	{
+		counter++;
+	}
+	return (counter);
 }

@@ -6,11 +6,11 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:18:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/05/29 19:19:38 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:50:07 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*ft_strchr(const char *s, int c)
 {
