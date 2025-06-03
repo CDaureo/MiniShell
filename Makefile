@@ -4,9 +4,10 @@ SRC_FILES = ./src
 SRC_UTILS = $(SRC_FILES)/utils
 SRC_LIBRARY = $(SRC_FILES)/library
 SRC_ERRORS = $(SRC_FILES)/errors
+SRC_PARSING = $(SRC_FILES)/parsing
 
 SRC = $(wildcard $(SRC_FILES)/*.c) $(wildcard $(SRC_UTILS)/*.c) $(wildcard $(SRC_ERRORS)/*.c) \
-$(wildcard $(SRC_LIBRARY)/*.c)
+$(wildcard $(SRC_LIBRARY)/*.c) $(wildcard $(SRC_PARSING)/*.c)
 OBJ = $(SRC:.c=.o)
 
 CC = gcc

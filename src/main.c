@@ -6,19 +6,19 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 12:09:09 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:29:08 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int main(int argc, char **argv, char **envp)
-{	
-	(void)argc;
-	(void)argv;
- 	t_ms t_ms;
-	t_ms.envp = envp;
-	minishell_init(&t_ms);
-	return(0);
- }
+//int main(int argc, char **argv, char **envp)
+//{	
+//	(void)argc;
+//	(void)argv;
+// 	t_ms t_ms;
+//	t_ms.envp = envp;
+//	minishell_init(&t_ms);
+//	return(0);
+//}
  

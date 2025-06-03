@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 11:33:16 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:41:52 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct t_ms
 
 void minishell_init(t_ms *ms);
 char *find_executable(char *cmd, char **paths);
+void error_msg(const char *msg);
 /* ************************************************************************** */
 /* ************************LIBRARY FUNCTIONS********************************* */
 /* ************************************************************************** */
@@ -78,4 +79,9 @@ char *ft_strchr(const char *s, int c);
 /* ************************************************************************** */
 t_token *create_token(t_token_type type, t_tokens specific, const char *value);
 void append_token(t_token **head, t_token *new_token);
-void free_tokens(t_token *tokens)
+void free_tokens(t_token *tokens);
+t_token *lexer(const char *input);
+/* ************************************************************************** */
+/* **************************UTILS FUNCTIONS********************************* */
+/* ************************************************************************** */
+void pipex(t_ms *ms);

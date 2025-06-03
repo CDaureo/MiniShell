@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_helpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:40:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 11:33:38 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:28:29 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 t_token *create_token(t_token_type type, t_tokens specific, const char *value)
 {
@@ -60,20 +60,18 @@ void free_tokens(t_token *tokens)
     }
 }
 
-//int main()
-//{
-//    const char *input = "ls | grep foo < output.txt";
-//    t_token *tokens = lexer(input);
-
-//    // Print tokens
-//    t_token *current = tokens;
-//    while (current)
-//    {
-//        printf("Type: %d, Specific: %d, Value: %s\n", current->type, current->specific, current->value);
-//        current = current->next;
-//    }
-
-//    // Free tokens
-//    free_tokens(tokens);
-//    return 0;
-//}
+int main()
+{
+    const char *input = "ls | grep foo < output.txt";
+    t_token *tokens = lexer(input);
+    // Print tokens
+    t_token *current = tokens;
+    while (current)
+    {
+        printf("Type: %d, Specific: %d, Value: %s\n", current->type, current->specific, current->value);
+        current = current->next;
+    }
+    // Free tokens
+    free_tokens(tokens);
+    return 0;
+}
