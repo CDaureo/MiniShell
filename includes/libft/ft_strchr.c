@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/02 19:05:54 by simgarci         ###   ########.fr       */
+/*   Created: 2024/09/24 18:12:23 by simgarci          #+#    #+#             */
+/*   Updated: 2024/10/01 13:32:05 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv, char **envp)
-{	
-	(void)argc;
-	(void)argv;
- 	t_ms t_ms;
-	t_ms.envp = envp;
-	minishell_init(&t_ms);
-	return(0);
- }
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	c = (unsigned char)c;
+	while (s[i] != '\0')
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
+	}
+	if (c == '\0')
+		return ((char *)&s[i]);
+	return (NULL);
+}
