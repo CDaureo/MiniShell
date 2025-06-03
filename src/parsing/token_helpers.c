@@ -6,11 +6,23 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:40:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 11:33:38 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:10:22 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_input(const char *input, int i)
+{
+	if (input[i] == '|' || input[i] == '>' || input[i] == '<')
+	{
+		if (input[i + 1] && (input[i + 1] == '|' || input[i + 1] == '>' || input[i + 1] == '<'))
+			return (0);
+	}
+	else if (ft_strchr(" \t\n\v\f\r", input[i]))
+		return (0);
+	return (1);
+}
 
 t_token *create_token(t_token_type type, t_tokens specific, const char *value)
 {

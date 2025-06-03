@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 11:33:16 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:08:09 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ size_t ft_strlen(const char *str);
 int ft_strcmp(const char *s1, const char *s2);
 char *ft_strchr(const char *s, int c);
 /* ************************************************************************** */
-/* **************************TOKEN FUNCTIONS********************************* */
+/* **************************LEXER FUNCTIONS********************************* */
 /* ************************************************************************** */
 t_token *create_token(t_token_type type, t_tokens specific, const char *value);
 void append_token(t_token **head, t_token *new_token);
-void free_tokens(t_token *tokens)
+void free_tokens(t_token *tokens);
+int	check_input(const char *input, int i);
+t_token *lexer(const char *input);
