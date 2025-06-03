@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:12:23 by simgarci          #+#    #+#             */
-/*   Updated: 2024/10/01 13:32:05 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:22:03 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+#include "../../includes/libft.h"
 char	*ft_strchr(const char *s, int c)
 {
 	int	i;

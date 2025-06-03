@@ -3,7 +3,6 @@ NAME = minishell
 SRC_FILES = ./src
 SRC_UTILS = $(SRC_FILES)/utils
 SRC_LIBRARY = $(SRC_FILES)/library
-
 SRC_ERRORS = $(SRC_FILES)/errors
 
 SRC = $(wildcard $(SRC_FILES)/*.c) $(wildcard $(SRC_UTILS)/*.c) $(wildcard $(SRC_ERRORS)/*.c) \
@@ -14,7 +13,13 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
-all: $(NAME)
+all: libft/libft.a library/liblibrary.a $(NAME)
+
+libft/libft.a:
+	$(MAKE) -C src/library
+
+library/liblibrary.a:
+	$(MAKE) -C src/library
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LDFLAGS)
@@ -24,9 +29,13 @@ $(NAME): $(OBJ)
 
 clean:
 	rm -f $(OBJ)
+	$(MAKE) -C src/library clean
+	$(MAKE) -C src/library clean
 
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -C src/library fclean
+	$(MAKE) -C src/library fclean
 
 re: fclean all
 
