@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 13:12:12 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/06/03 13:05:57 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/06/03 13:07:22 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-/*int main(int argc, char **argv, char **envp)
-{	
-	(void)argc;
-	(void)argv;
- 	t_ms t_ms;
-	t_ms.envp = envp;
-	minishell_init(&t_ms);
-	return(0);
-}*/
- 
+void	free_pathstr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}

@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 12:41:52 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:07:57 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,19 @@ void error_msg(const char *msg);
 /* ************************************************************************** */
 /* ************************LIBRARY FUNCTIONS********************************* */
 /* ************************************************************************** */
-char *ft_strdup(const char *s);
-size_t ft_strlen(const char *str);
-int ft_strcmp(const char *s1, const char *s2);
-char *ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *s);
+size_t	ft_strlen(const char *str);
+int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strchr(const char *s, int c);
 /* ************************************************************************** */
 /* **************************TOKEN FUNCTIONS********************************* */
 /* ************************************************************************** */
-t_token *create_token(t_token_type type, t_tokens specific, const char *value);
-void append_token(t_token **head, t_token *new_token);
-void free_tokens(t_token *tokens);
-t_token *lexer(const char *input);
+t_token	*create_token(t_token_type type, t_tokens specific, const char *value);
+void	append_token(t_token **head, t_token *new_token);
+void	free_tokens(t_token *tokens);
+t_token	*lexer(const char *input);
 /* ************************************************************************** */
-/* **************************UTILS FUNCTIONS********************************* */
+/* **************************PIPE FUNCTIONS********************************* */
 /* ************************************************************************** */
-void pipex(t_ms *ms);
+void	pipex(t_ms *ms);
+void	free_pathstr(char **arr);

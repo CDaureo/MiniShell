@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:40:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 12:28:29 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:46:11 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,4 @@ void free_tokens(t_token *tokens)
         free(current);
         current = next;
     }
-}
-
-int main()
-{
-    const char *input = "ls | grep foo < output.txt";
-    t_token *tokens = lexer(input);
-    // Print tokens
-    t_token *current = tokens;
-    while (current)
-    {
-        printf("Type: %d, Specific: %d, Value: %s\n", current->type, current->specific, current->value);
-        current = current->next;
-    }
-    // Free tokens
-    free_tokens(tokens);
-    return 0;
 }
