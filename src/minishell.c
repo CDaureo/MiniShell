@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:20:29 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/02 17:02:25 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:43:55 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ void minishell_init(t_ms *ms)
 	ms->pid = -1;
 	// Initialize readline library
 
-/*	
-    while ((ms->input = readline("minishell>> ")))
-    {
+	while ((ms->input = readline("minishell>> ")))
+	{
 		if (ms->input[0] == '\0')
 		{
 			free(ms->input);
@@ -37,5 +36,5 @@ void minishell_init(t_ms *ms)
 		}	
 		add_history(ms->input);
 		free(ms->input);
-    }*/
+    }
 }

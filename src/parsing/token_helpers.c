@@ -6,11 +6,11 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:40:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 13:10:22 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:50:58 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 int	check_input(const char *input, int i)
 {
@@ -71,21 +71,3 @@ void free_tokens(t_token *tokens)
         current = next;
     }
 }
-
-//int main()
-//{
-//    const char *input = "ls | grep foo < output.txt";
-//    t_token *tokens = lexer(input);
-
-//    // Print tokens
-//    t_token *current = tokens;
-//    while (current)
-//    {
-//        printf("Type: %d, Specific: %d, Value: %s\n", current->type, current->specific, current->value);
-//        current = current->next;
-//    }
-
-//    // Free tokens
-//    free_tokens(tokens);
-//    return 0;
-//}
