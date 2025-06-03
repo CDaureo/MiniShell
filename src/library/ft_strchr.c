@@ -3,34 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 19:18:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/02 16:50:07 by cdaureo-         ###   ########.fr       */
+/*   Created: 2024/09/24 18:12:23 by simgarci          #+#    #+#             */
+/*   Updated: 2024/10/01 13:32:05 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
-	int				i;
-	unsigned char	uc;
+	int	i;
 
-	uc = (unsigned char)c;
 	i = 0;
+	c = (unsigned char)c;
 	while (s[i] != '\0')
 	{
-		if (s[i] == uc)
-		{
-			return ((char *)(&s[i]));
-		}
-		else
-			i++;
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
 	}
-	if (uc == '\0')
-	{
-		return ((char *)(&s[i]));
-	}
+	if (c == '\0')
+		return ((char *)&s[i]);
 	return (NULL);
 }

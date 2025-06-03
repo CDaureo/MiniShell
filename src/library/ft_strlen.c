@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 16:49:38 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/02 16:27:27 by cdaureo-         ###   ########.fr       */
+/*   Created: 2024/09/18 13:50:31 by simgarci          #+#    #+#             */
+/*   Updated: 2024/10/01 15:35:30 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-	int	counter;
+	int	i;
 
-	counter = 0;
-	while (str[counter] != '\0')
+	i = 0;
+	while (str[i] != '\0')
 	{
-		counter++;
+		i++;
 	}
-	return (counter);
+	return (i);
 }

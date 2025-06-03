@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 11:31:58 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 11:53:30 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:01:19 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ t_token *lexer(const char *input)
 	char	*word;
 	int		i;
 	int		start;
-	
+
 	tokens = NULL;
     i = 0;
     while (input[i])
     {
-  
+        if (ft_strchr(" \t\n\v\f\r", input[i]))
+        {
             i++;
             continue;
         }

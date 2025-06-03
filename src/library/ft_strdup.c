@@ -3,33 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 19:26:35 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/02 16:25:50 by cdaureo-         ###   ########.fr       */
+/*   Created: 2024/09/25 15:42:20 by simgarci          #+#    #+#             */
+/*   Updated: 2024/09/26 18:02:29 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
 char	*ft_strdup(const char *s)
 {
+	char	*s2;
 	size_t	i;
-	char	*dupe;
-	size_t	size;
 
 	i = 0;
-	size = ft_strlen((char *)s);
-	dupe = malloc(size + 1 * sizeof(char));
-	if (dupe == NULL)
+	s2 = malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!s2)
+		return (0);
+	while (s[i] != '\0')
 	{
-		return (NULL);
-	}
-	while (i < size)
-	{
-		dupe[i] = s[i];
+		s2[i] = s[i];
 		i++;
 	}
-	dupe[i] = '\0';
-	return (dupe);
+	s2[i] = '\0';
+	return (s2);
 }
