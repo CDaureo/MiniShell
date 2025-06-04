@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 13:44:36 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:16:29 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,35 @@ static char **tokens_to_str(t_token *tokens)
 	}
 	argv[i] = NULL;
 	return argv;	
+}
+
+void execute_pipeline(t_token *tokens, char **envp)
+{
+	int fd[2];
+	pid_t pid;
+	t_token *start_cmd = tokens;
+	t_token *tmp_tokens = tokens;
+	while(start_cmd)
+	{
+		tmp_tokens = start_cmd;
+		while(tmp_tokens && tmp_tokens->type != TOKEN_PIPE)
+			tmp_tokens = tmp_tokens->next;
+		if (tmp_tokens)
+			pipe(fd);
+
+		pid = fork();
+		if (pid < 0)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		if (pid == 0) // Proceso hijo
+		{
+			/* code */
+		}
+		
+		
+	}
 }
 
 
