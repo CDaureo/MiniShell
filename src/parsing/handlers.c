@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:06:39 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 13:07:24 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:12:15 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static void append_redirection_token(t_token **tokens, int type, int subtype, const char *value, int *i, int increment)
 {
