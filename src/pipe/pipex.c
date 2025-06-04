@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 13:44:36 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:55:42 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char **tokens_to_str(t_token *tokens)
 	}
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
-		return NULL;
+		return (NULL);
 	tkn = tokens;
 	while (i < count)
 	{
@@ -41,7 +41,7 @@ static char **tokens_to_str(t_token *tokens)
 		i++;
 	}
 	argv[i] = NULL;
-	return argv;	
+	return (argv);	
 }
 
 

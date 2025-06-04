@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:20:29 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 12:43:55 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:40:03 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void minishell_init(t_ms *ms)
 	ms->cmd = NULL;
 	ms->cmd_paths = NULL;
 	ms->cmd_args = NULL;
-	ms->exit_status = 0;
+	ms->exit_status = 0; 
 	ms->fd[0] = -1;
 	ms->fd[1] = -1;
 	ms->pid = -1;

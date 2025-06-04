@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 13:48:55 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:04:25 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,22 @@ size_t	ft_strlen(const char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strchr(const char *s, int c);
 /* ************************************************************************** */
-/* **************************LEXER FUNCTIONS********************************* */
+/* **************************TOKEN FUNCTIONS********************************* */
 /* ************************************************************************** */
 t_token	*create_token(t_token_type type, t_tokens specific, const char *value);
 void	append_token(t_token **head, t_token *new_token);
 void	free_tokens(t_token *tokens);
 t_token	*lexer(const char *input);
 /* ************************************************************************** */
-/* **************************PIPE FUNCTIONS********************************* */
+/* ***************************HANDLER FUNCTIONS****************************** */
+/* ************************************************************************** */
+void	handle_append(t_token **tokens, int type, int subtype, \
+	const char *value, int *i, int increment);
+void	handle_pipes(const char *input, int *i, t_token **tokens);
+void	handle_redirections(const char *input, int *i, t_token **tokens);
+void	handle_words(const char *input, int *i, t_token **tokens);
+/* ************************************************************************** */
+/* ***************************PIPE FUNCTIONS********************************* */
 /* ************************************************************************** */
 void	pipex(t_ms *ms);
 void	free_pathstr(char **arr);

@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:40:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 13:50:58 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:04:38 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,30 @@ void free_tokens(t_token *tokens)
         free(current);
         current = next;
     }
+}
+
+t_token *lexer(const char *input)
+{
+	t_token	*tokens;
+	int		i;
+
+	tokens = NULL;
+	i = 0;
+	while (input[i])
+	{
+		if (ft_strchr(" \t\n\v\f\r", input[i]))
+		{
+			i++;
+			continue;
+		}
+		if(!check_input(input, i))
+			return (NULL);
+		if (input[i] == '|')
+			handle_pipes(input, &i, &tokens);
+		else if (input[i] == '>' || input[i] == '<')
+			handle_redirections(input, &i, &tokens);
+		else
+			handle_word(input, &i, &tokens);
+	}
+	return (tokens);
 }
