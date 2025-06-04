@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/04 13:16:29 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:42:12 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char **tokens_to_str(t_token *tokens)
 	}
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
-		return NULL;
+		return (NULL);
 	tkn = tokens;
 	while (i < count)
 	{
@@ -50,6 +50,8 @@ void execute_pipeline(t_token *tokens, char **envp)
 	pid_t pid;
 	t_token *start_cmd = tokens;
 	t_token *tmp_tokens = tokens;
+	int previous_fd = -1; //para almacenar el fd anterior
+
 	while(start_cmd)
 	{
 		tmp_tokens = start_cmd;
@@ -60,17 +62,35 @@ void execute_pipeline(t_token *tokens, char **envp)
 
 		pid = fork();
 		if (pid < 0)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
+			error_msg("Error al crear el proceso hijo");
 		if (pid == 0) // Proceso hijo
 		{
-			/* code */
+			if (previous_fd != -1)
+			{
+				close(fd[0]); // Cerrar el extremo de lectura del pipe anterior
+				dup2(previous_fd, STDIN_FILENO); // Redirigir entrada estándar
+				close(fd[1]); // Cerrar el fd anterior
+			}
+			char **argv = tokens_to_str(start_cmd);
+			char *path = get_cmd_path(argv[0], envp);
+			if (path)
+			{
+				execve(path, argv, envp);
+				free(path);
+			}
+			if (!path || execve(path, argv, envp) == -1)
+				error_msg("Error al ejecutar el comando");
 		}
-		
-		
+		if (previous_fd != -1)
+			close(previous_fd); // Cerrar el fd anterior en el padre
+		if (tmp_tokens)
+		{
+			close(fd[1]); // Cerrar el extremo de escritura del pipe actual
+			previous_fd = fd[0]; // Guardar el fd de lectura para el siguiente comando
+			start_cmd = tmp_tokens->next; // Avanzar al siguiente comando
+		}
+		else
+			start_cmd = NULL; // No hay más comandos, salir del bucle
+		while(wait(NULL) > 0); // Esperar a que el hijo termine
 	}
 }
-
-
