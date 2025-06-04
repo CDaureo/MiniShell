@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:06:39 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/04 15:50:46 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:30:29 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	handle_words(const char *input, int *i, t_token **tokens)
 		while (input[*i] && !(ft_strchr(" \t\n\v\f\r", input[*i])) \
 			&& input[*i] != '|' && input[*i] != '>' && input[*i] != '<')
 			(*i)++;
-		word = strndup(&input[start], *i - start); //cambiar por version ft
+		word = ft_strndup(&input[start], *i - start); //cambiar por version ft
 	}
 	append_token(tokens, create_token(TOKEN_WORD, 0, word));
 	free(word);
