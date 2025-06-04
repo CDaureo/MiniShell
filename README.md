@@ -4,7 +4,7 @@
 
 - [✅] **Mostrar una entrada** mientras espera un comando nuevo.
 - [✅] **Tener un historial funcional.**
-- [❌] Buscar y ejecutar el ejecutable correcto (basado en la variable `PATH` o mediante el uso de rutas relativas o absolutas).
+- [✅] Buscar y ejecutar el ejecutable correcto (basado en la variable `PATH` o mediante el uso de rutas relativas o absolutas).
 - [❌] No interpretar comillas sin cerrar o caracteres especiales no especificados en el enunciado como `\` (barra invertida) o `;` (punto y coma).
 - [❌] Gestionar que la `'` evite que el shell interprete los metacaracteres en la secuencia entrecomillada.
 - [❌] Gestionar que la `"` evite que el shell interprete los metacaracteres en la secuencia entrecomillada exceptuando `$` (signo de dólar).
@@ -16,7 +16,6 @@
 - [❌] **Implementar pipes** (carácter `|`). El output de cada comando en la pipeline se conecta a través de un pipe al input del siguiente comando.
 - [❌] Gestionar las **variables de entorno** (`$` seguidos de caracteres) que deberán expandirse a sus valores.
 - [❌] Gestionar `$?`, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
-- [❌] Limpiarle el culo a Carlos.
 - Gestionar señales que funcionan como en bash:
   - `ctrl-C` [❌]
   - `ctrl-D` [❌]

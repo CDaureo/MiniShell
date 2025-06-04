@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:20:29 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/04 15:43:01 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/06/04 15:49:25 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/06/04 15:51:01 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/libft.h"
 
-void minishell_init(t_ms *ms)
+char *ft_strndup(const char *s, size_t n)
 {
-	ms->envp = NULL;
-	ms->input = NULL;
-	ms->prompt = "minishell>> ";
-	ms->history = NULL;
-	ms->cmd = NULL;
-	ms->cmd_paths = NULL;
-	ms->cmd_args = NULL;
-	ms->exit_status = 0; 
-	ms->fd[0] = -1;
-	ms->fd[1] = -1;
-	ms->pid = -1;
+	size_t len = 0;
+	char *dup;
+
+	while (s[len] && len < n)
+		len++;
+
+	dup = (char *)malloc(len + 1);
+	if (!dup)
+		return NULL;
+
+	size_t i = 0;
+	while (i < len)
+	{
+		dup[i] = s[i];
+		i++;
+	}
+
+	dup[len] = '\0';
+	return dup;
 }

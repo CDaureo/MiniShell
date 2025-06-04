@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/04 14:02:08 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:40:59 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **envp)
     char *line;
     t_token *tokens;
 
-    while ((line = readline("minishell>> ")))
+    while ((line = readline("minishell>>>> ")))
     {
         if (*line)
         {

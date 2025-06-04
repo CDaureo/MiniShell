@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:06:39 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/04 13:55:44 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:50:46 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*handle_quotes(const char *input, int *i)
 		fprintf(stderr, "Error: Unmatched %c quote\n", quote); //cambiar por version ft
 		return (NULL);
 	}
-	word = strndup(&input[start], *i - start);
+	word = ft_strndup(&input[start], *i - start);
 	(*i)++;
 	return (word);
 }
