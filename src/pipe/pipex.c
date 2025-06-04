@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/04 13:42:12 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:34:21 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void execute_pipeline(t_token *tokens, char **envp)
 				free(path);
 			}
 			if (!path || execve(path, argv, envp) == -1)
-				error_msg("Error al ejecutar el comando");
+				error_msg(argv[0]);
 		}
 		if (previous_fd != -1)
 			close(previous_fd); // Cerrar el fd anterior en el padre
