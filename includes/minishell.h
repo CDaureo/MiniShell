@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/04 13:52:46 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:24:04 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,16 @@ typedef struct s_token
 	struct s_token *next;
 } t_token;
 
+typedef struct s_env
+{
+	char *key;
+	char *value;
+	struct s_env *next;
+} t_env;
+
 typedef struct t_ms
 {
+	t_env *env_list;
 	char *input;
 	char *prompt;
 	char *history;	
@@ -64,6 +72,8 @@ typedef struct t_ms
 	int fd[2];
 	int pid;
 } t_ms;
+
+
 
 void minishell_init(t_ms *ms);
 char *find_executable(char *cmd, char **paths);
@@ -97,3 +107,11 @@ void	pipex(t_ms *ms);
 void	free_pathstr(char **arr);
 char *get_cmd_path(char *cmd, char **envp);
 void execute_pipeline(t_token *tokens, char **envp);
+/* ************************************************************************** */
+/* ***************************BUILDS FUNCTIONS******************************* */
+/* ************************************************************************** */
+
+int ft_cd(char **args, char **envp);
+int	handle_builds(char **argv, t_ms *ms);
+char **copy_envp(char **envp);
+char **tokens_to_str(t_token *tokens);

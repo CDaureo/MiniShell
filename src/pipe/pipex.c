@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/04 16:34:21 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:38:11 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //Esta función convierte una lista de tokens en un array de strings
 //para pasar directamente a execve.
-static char **tokens_to_str(t_token *tokens)
+char **tokens_to_str(t_token *tokens)
 {
 	int count;
 	int i;
@@ -67,10 +67,16 @@ void execute_pipeline(t_token *tokens, char **envp)
 		{
 			if (previous_fd != -1)
 			{
-				close(fd[0]); // Cerrar el extremo de lectura del pipe anterior
 				dup2(previous_fd, STDIN_FILENO); // Redirigir entrada estándar
-				close(fd[1]); // Cerrar el fd anterior
+				close(previous_fd); // Cerrar el fd anterior
 			}
+			if (tmp_tokens)
+			{
+				close(fd[0]);
+                dup2(fd[1], STDOUT_FILENO);
+                close(fd[1]);
+			}
+			
 			char **argv = tokens_to_str(start_cmd);
 			char *path = get_cmd_path(argv[0], envp);
 			if (path)
@@ -91,6 +97,7 @@ void execute_pipeline(t_token *tokens, char **envp)
 		}
 		else
 			start_cmd = NULL; // No hay más comandos, salir del bucle
-		while(wait(NULL) > 0); // Esperar a que el hijo termine
 	}
+	while(wait(NULL) != -1); // Esperar a que el hijo termine
+
 }

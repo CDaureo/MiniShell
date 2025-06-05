@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/04 15:40:59 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:10:42 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
     char *line;
     t_token *tokens;
+	t_ms ms;
+	ms.envp = copy_envp(envp);
 
     while ((line = readline("minishell>>>> ")))
     {
@@ -27,8 +29,12 @@ int main(int argc, char **argv, char **envp)
             tokens = lexer(line); // Usa tu lexer de token_helpers.c
             if (tokens)
             {
+				char **argv_cmd = tokens_to_str(tokens); // Convierte tokens a argv
+
+				if (!handle_builds(argv_cmd, &ms))
                 execute_pipeline(tokens, envp); // Usa tu función de pipex.c
-                free_tokens(tokens);            // Libera memoria de tokens
+			ft_free_split(argv_cmd);
+			free_tokens(tokens);            // Libera memoria de tokens
             }
         }
         free(line);
