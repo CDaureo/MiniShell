@@ -32,14 +32,11 @@ all: libft/libft.a $(NAME)
 	@toilet -f ivrit -F crop MINISHELL
 
 libft/libft.a:
-	@sleep 2
-	@echo "$(BLUE)📦 Compilando libft...$(RESET)"
 	@$(MAKE) --no-print-directory -C src/library
-	@sleep 2
 
 $(NAME): $(OBJ)
-	@echo "$(BLUE)🔧 Enlazando objetos...$(RESET)"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LDFLAGS)
+	@echo "$(BLUE)🔧 Enlazando objetos...$(RESET)"
 	@sleep 2
 
 %.o: %.c
