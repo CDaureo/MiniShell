@@ -4,6 +4,7 @@ CC      := cc
 CFLAGS  := -Wall -Werror -Wextra
 
 SRC     := 	ft_atoi.c \
+			ft_add_to_array.c \
 			ft_bzero.c \
 			ft_calloc.c \
 			ft_isalnum.c \

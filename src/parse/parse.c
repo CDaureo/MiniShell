@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:12:56 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/11 13:28:04 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:25:57 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds *curren
 			}
 		}
 		else if (current_token->type == TOKEN_WORD)
-			current_cmd->str = ft_add_to_array(current_cmd->str, current_token->value);
+			current_cmd->str = ft_add_to_array(&current_cmd->str, current_token->value);
 		prev_token = current_token;
 		current_token = current_token->next;
 	}	
@@ -83,15 +83,13 @@ void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds *curren
 void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds)
 {
 	t_simple_cmds *current_cmd;
-	t_token *prev_token;
 	t_token *current_token;
 	
 	current_cmd = create_simple_cmd();
-	prev_token = NULL;
 	current_token = *tokens;
 	while (current_token)
 	{
-		command_types(*tokens, *cmds, current_cmd, current_token);
+		command_types(tokens, &cmds, current_cmd, current_token);
 	}
 	if (current_cmd->str || current_cmd->redirections)
 		add_simple_cmd(cmds, current_cmd);

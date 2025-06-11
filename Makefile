@@ -40,6 +40,7 @@ $(NAME): $(OBJ)
 	@sleep 2
 
 %.o: %.c
+	@echo "$(YELLOW)🛐 Que funcione por la virgencita del carmen....$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
