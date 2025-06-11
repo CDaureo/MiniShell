@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/10 16:53:52 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:00:21 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <limits.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <sys/types.h>
@@ -25,16 +26,8 @@
 
 #define E_FAILURE 1
 #define E_SUCCESS 0
+#define PATH_MAX 4096
 
-typedef struct s_simple_cmds
-{
-    char                **str;            // Array of arguments
-    int                 (*builtin)(t_ms *, struct s_simple_cmds *);
-    int                 num_redirections; // Count of redirections
-    char                *hd_file_name;    // Heredoc file name
-    t_token             *redirections;    // Linked list of redirection tokens
-    struct s_simple_cmds *next;           // Pointer to next command
-}	t_simple_cmds;
 
 typedef enum e_token_type
 {
@@ -83,6 +76,16 @@ typedef struct t_ms
 	int pid;
 } t_ms;
 
+typedef struct s_simple_cmds
+{
+    char                **str;            // Array of arguments
+    int                 (*builtin)(t_ms *, struct s_simple_cmds *);
+    int                 num_redirections; // Count of redirections
+    char                *hd_file_name;    // Heredoc file name
+    t_token             *redirections;    // Linked list of redirection tokens
+    struct s_simple_cmds *next;           // Pointer to next command
+}	t_simple_cmds;
+
 
 
 void minishell_init(t_ms *ms);
@@ -116,12 +119,19 @@ void	handle_words(const char *input, int *i, t_token **tokens);
 void	pipex(t_ms *ms);
 void	free_pathstr(char **arr);
 char *get_cmd_path(char *cmd, char **envp);
-void execute_pipeline(t_token *tokens, char **envp);
+void execute_pipeline(t_token *tokens, char **envp, t_ms *ms);
 /* ************************************************************************** */
 /* ***************************BUILDS FUNCTIONS******************************* */
 /* ************************************************************************** */
-
-int ft_cd(char **args, char **envp);
+int ft_cd(char **args, t_ms *ms);
 int	handle_builds(char **argv, t_ms *ms);
 char **copy_envp(char **envp);
 char **tokens_to_str(t_token *tokens);
+void update_env_var(t_env *env, const char *key, const char *value);
+char *get_env_value(t_env *env, const char *key);
+t_env *init_env_list(char **envp);
+/* ************************************************************************** */
+/* ***************************PARSER FUNCTIONS******************************* */
+/* ************************************************************************** */
+void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds *current_cmd, t_token *current_token);
+

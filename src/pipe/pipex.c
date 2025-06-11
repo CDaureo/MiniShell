@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/05 17:38:11 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:06:35 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,60 +44,73 @@ char **tokens_to_str(t_token *tokens)
 	return argv;	
 }
 
-void execute_pipeline(t_token *tokens, char **envp)
+static void	run_command_in_pipeline(
+    t_token *start_cmd, t_token *tmp_tokens, int previous_fd, char **envp, t_ms *ms)
 {
-	int fd[2];
-	pid_t pid;
-	t_token *start_cmd = tokens;
-	t_token *tmp_tokens = tokens;
-	int previous_fd = -1; //para almacenar el fd anterior
+    int fd[2];
+    char **argv = tokens_to_str(start_cmd);
+    char *path = get_cmd_path(argv[0], envp);
 
-	while(start_cmd)
-	{
-		tmp_tokens = start_cmd;
-		while(tmp_tokens && tmp_tokens->type != TOKEN_PIPE)
-			tmp_tokens = tmp_tokens->next;
-		if (tmp_tokens)
-			pipe(fd);
+    if (tmp_tokens)
+    {
+        pipe(fd);
+        close(fd[0]);
+        dup2(fd[1], STDOUT_FILENO);
+        close(fd[1]);
+    }
+    if (previous_fd != -1)
+    {
+        dup2(previous_fd, STDIN_FILENO);
+        close(previous_fd);
+    }
 
-		pid = fork();
-		if (pid < 0)
-			error_msg("Error al crear el proceso hijo");
-		if (pid == 0) // Proceso hijo
-		{
-			if (previous_fd != -1)
-			{
-				dup2(previous_fd, STDIN_FILENO); // Redirigir entrada estándar
-				close(previous_fd); // Cerrar el fd anterior
-			}
-			if (tmp_tokens)
-			{
-				close(fd[0]);
-                dup2(fd[1], STDOUT_FILENO);
-                close(fd[1]);
-			}
-			
-			char **argv = tokens_to_str(start_cmd);
-			char *path = get_cmd_path(argv[0], envp);
-			if (path)
-			{
-				execve(path, argv, envp);
-				free(path);
-			}
-			if (!path || execve(path, argv, envp) == -1)
-				error_msg(argv[0]);
-		}
-		if (previous_fd != -1)
-			close(previous_fd); // Cerrar el fd anterior en el padre
-		if (tmp_tokens)
-		{
-			close(fd[1]); // Cerrar el extremo de escritura del pipe actual
-			previous_fd = fd[0]; // Guardar el fd de lectura para el siguiente comando
-			start_cmd = tmp_tokens->next; // Avanzar al siguiente comando
-		}
-		else
-			start_cmd = NULL; // No hay más comandos, salir del bucle
-	}
-	while(wait(NULL) != -1); // Esperar a que el hijo termine
+    // Ejecutar builtins en el hijo si están en una tubería
+    if (argv[0] && handle_builds(argv, ms))
+        exit(0);
 
+    if (path)
+    {
+        execve(path, argv, envp);
+		free(path);
+    }
+    error_msg(argv[0]);
+    exit(1);
+}
+
+void execute_pipeline(t_token *tokens, char **envp, t_ms *ms)
+{
+    pid_t pid;
+    t_token *start_cmd = tokens;
+    t_token *tmp_tokens = tokens;
+    int previous_fd = -1;
+    int fd[2];
+
+    while (start_cmd)
+    {
+        tmp_tokens = start_cmd;
+        while (tmp_tokens && tmp_tokens->type != TOKEN_PIPE)
+            tmp_tokens = tmp_tokens->next;
+
+        if (tmp_tokens)
+            pipe(fd);
+
+        pid = fork();
+        if (pid < 0)
+            error_msg("Error al crear el proceso hijo");
+        if (pid == 0)
+            run_command_in_pipeline(start_cmd, tmp_tokens, previous_fd, envp, ms);
+
+        if (previous_fd != -1)
+            close(previous_fd);
+        if (tmp_tokens)
+        {
+            close(fd[1]);
+            previous_fd = fd[0];
+            start_cmd = tmp_tokens->next;
+        }
+        else
+            start_cmd = NULL;
+    }
+    while (wait(NULL) != -1)
+        ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:12:56 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/10 17:23:30 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:44:56 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,42 @@ void add_simple_cmd(t_simple_cmds **cmds, t_simple_cmds *new_cmd)
 void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds)
 {
 	t_simple_cmds *current_cmd;
-	t_token *prev_token;
+	//t_token *prev_token;
 	t_token *current_token;
 	
 	current_cmd = create_simple_cmd();
-	prev_token = NULL;
+	//prev_token = NULL;
 	current_token = *tokens;
 	while (current_token)
 	{
-		command_types(*tokens, *cmds, current_cmd, current_token);
+		command_types(tokens, cmds, current_cmd, current_token);
+
 	}
 	if (current_cmd->str || current_cmd->redirections)
 		add_simple_cmd(cmds, current_cmd);
 }
+
+char	**ft_add_to_array(char **array, const char *str)
+{
+    int		len = 0;
+    char	**new_array;
+
+    if (array)
+    {
+        while (array[len])
+            len++;
+    }
+    new_array = malloc(sizeof(char *) * (len + 2));
+    if (!new_array)
+        return (NULL);
+    for (int i = 0; i < len; i++)
+        new_array[i] = array[i];
+    new_array[len] = ft_strdup(str);
+    new_array[len + 1] = NULL;
+    free(array);
+    return (new_array);
+}
+
 void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds *current_cmd, t_token *current_token)
 {
 	t_token *redir;
