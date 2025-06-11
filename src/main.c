@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/10 16:49:36 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:10:02 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int main(int argc, char **argv, char **envp)
     t_token *tokens;
     t_ms ms;
     ms.envp = copy_envp(envp);
+    ms.env_list = init_env_list(envp); // <-- Añade esta línea
 
     char cwd[4096];
     char hostname[256];
@@ -86,8 +87,21 @@ int main(int argc, char **argv, char **envp)
             if (tokens)
             {
                 char **argv_cmd = tokens_to_str(tokens);
-                if (!handle_builds(argv_cmd, &ms))
-                    execute_pipeline(tokens, envp);
+                int has_pipe = 0;
+                t_token *tmp = tokens;
+                while (tmp)
+                {
+                    if (tmp->type == TOKEN_PIPE)
+                    {
+                        has_pipe = 1;
+                        break;
+                    }
+                    tmp = tmp->next;
+                }
+                if (has_pipe)
+                    execute_pipeline(tokens, envp, &ms);
+                else
+                    handle_builds(argv_cmd, &ms);
                 ft_free_split(argv_cmd);
                 free_tokens(tokens);
             }
