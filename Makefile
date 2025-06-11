@@ -18,8 +18,8 @@ SRC = $(wildcard $(SRC_FILES)/*.c) \
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lreadline
+CFLAGS = -Wall -Wextra -Werror -fPIE
+LDFLAGS = -lreadline -pie
 
 GREEN = \033[1;32m
 BLUE = \033[1;34m
@@ -29,7 +29,7 @@ RESET = \033[0m
 
 all: libft/libft.a $(NAME)
 	@echo "$(GREEN)✅ Compilación completada: $(NAME)$(RESET)"
-	@toilet -f ivrit -F crop MINISHELL
+	#@toilet -f ivrit -F crop MINISHELL
 
 libft/libft.a:
 	@$(MAKE) --no-print-directory -C src/library

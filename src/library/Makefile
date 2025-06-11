@@ -1,7 +1,8 @@
 # ======================= CONFIG =========================
 NAME    := libft.a
 CC      := cc
-CFLAGS  := -Wall -Werror -Wextra
+CFLAGS  := -Wall -Werror -Wextra -fPIE
+LDFLAGS := -pie
 
 SRC     := 	ft_atoi.c \
 			ft_add_to_array.c \
