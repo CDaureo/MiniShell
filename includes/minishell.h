@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/10 16:53:52 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:08:52 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@
 #define E_FAILURE 1
 #define E_SUCCESS 0
 
-typedef struct s_simple_cmds
-{
-    char                **str;            // Array of arguments
-    int                 (*builtin)(t_ms *, struct s_simple_cmds *);
-    int                 num_redirections; // Count of redirections
-    char                *hd_file_name;    // Heredoc file name
-    t_token             *redirections;    // Linked list of redirection tokens
-    struct s_simple_cmds *next;           // Pointer to next command
-}	t_simple_cmds;
 
 typedef enum e_token_type
 {
@@ -83,6 +74,15 @@ typedef struct t_ms
 	int pid;
 } t_ms;
 
+typedef struct s_simple_cmds
+{
+    char                **str;            // Array of arguments
+    int                 (*builtin)(t_ms *, struct s_simple_cmds *);
+    int                 num_redirections; // Count of redirections
+    char                *hd_file_name;    // Heredoc file name
+    t_token             *redirections;    // Linked list of redirection tokens
+    struct s_simple_cmds *next;           // Pointer to next command
+}	t_simple_cmds;
 
 
 void minishell_init(t_ms *ms);
