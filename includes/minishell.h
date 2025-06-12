@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/11 13:27:29 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:50:02 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ char **tokens_to_str(t_token *tokens);
 void update_env_var(t_env *env, const char *key, const char *value);
 char *get_env_value(t_env *env, const char *key);
 t_env *init_env_list(char **envp);
+int		ft_pwd(void);
 /* ************************************************************************** */
 /* ***************************PARSER FUNCTIONS******************************* */
 /* ************************************************************************** */

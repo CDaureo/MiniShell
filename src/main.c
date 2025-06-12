@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/11 15:36:06 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:58:57 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,17 @@ int main(int argc, char **argv, char **envp)
     t_token *tokens;
     t_ms ms;
     ms.envp = copy_envp(envp);
-    ms.env_list = init_env_list(envp); // <-- Añade esta línea
+    ms.env_list = init_env_list(envp);
 
     char cwd[4096];
     char hostname[256];
     char *prompt;
     char *user;
     struct passwd *pw;
+
+    char *home_dir = getenv("HOME");
+    if (home_dir)
+        chdir(home_dir);
 
     while (1)
     {
@@ -53,11 +57,11 @@ int main(int argc, char **argv, char **envp)
         char *display_cwd = cwd;
 
         // Si cwd empieza por $HOME, reemplaza por ~
-        if (home && strncmp(cwd, home, strlen(home)) == 0)
+        if (home && strncmp(cwd, home, ft_strlen(home)) == 0)
         {
             // +1 para el slash final, si quieres ~/ en vez de solo ~
-            size_t home_len = strlen(home);
-            size_t new_len = strlen(cwd) - home_len + 2;
+            size_t home_len = ft_strlen(home);
+            size_t new_len = ft_strlen(cwd) - home_len + 2;
             char *tmp = malloc(new_len);
             if (tmp)
             {
@@ -67,7 +71,7 @@ int main(int argc, char **argv, char **envp)
             }
         }
 
-        size_t prompt_len = strlen(user) + 1 + strlen(hostname) + 1 + strlen(display_cwd) + 3;
+        size_t prompt_len = ft_strlen(user) + 1 + ft_strlen(hostname) + 1 + ft_strlen(display_cwd) + 3;
         prompt = malloc(prompt_len);
         if (!prompt)
             prompt = strdup("$ ");
