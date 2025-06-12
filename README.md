@@ -7,7 +7,7 @@
 - [✅] Buscar y ejecutar el ejecutable correcto (basado en la variable `PATH` o mediante el uso de rutas relativas o absolutas).
 - [✅] No interpretar comillas sin cerrar o caracteres especiales no especificados en el enunciado como `\` (barra invertida) o `;` (punto y coma).
 - [✅] Gestionar que la `'` evite que el shell interprete los metacaracteres en la secuencia entrecomillada.
-- [❌] Gestionar que la `"` evite que el shell interprete los metacaracteres en la secuencia entrecomillada exceptuando `$` (signo de dólar). <-- [❌]
+- [✅] Gestionar que la `"` evite que el shell interprete los metacaracteres en la secuencia entrecomillada exceptuando `$` (signo de dólar). <-- [❌]
 - **Implementar redirecciones:**
   - `<` debe redirigir input. [❌]
   - `>` debe redirigir output. [❌]
