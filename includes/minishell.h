@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/12 15:50:02 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:42:56 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	pipex(t_ms *ms);
 void	free_pathstr(char **arr);
 char *get_cmd_path(char *cmd, char **envp);
 void execute_pipeline(t_token *tokens, char **envp, t_ms *ms);
+void apply_redirections(t_simple_cmds *redirection);
 /* ************************************************************************** */
 /* ***************************BUILDS FUNCTIONS******************************* */
 /* ************************************************************************** */
@@ -131,6 +132,7 @@ void update_env_var(t_env *env, const char *key, const char *value);
 char *get_env_value(t_env *env, const char *key);
 t_env *init_env_list(char **envp);
 int		ft_pwd(void);
+t_env *init_env_list(char **envp);
 /* ************************************************************************** */
 /* ***************************PARSER FUNCTIONS******************************* */
 /* ************************************************************************** */

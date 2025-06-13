@@ -152,7 +152,7 @@ void print_simple_cmds(t_simple_cmds *cmds)
         current = current->next;
     }
 }
-
+/*
 int main(void)
 {
     const char *input = "echo Hello World > output.txt";
@@ -184,3 +184,4 @@ int main(void)
 
     return EXIT_SUCCESS;
 }
+*/

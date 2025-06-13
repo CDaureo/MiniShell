@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/11 13:06:35 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:29:15 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void execute_pipeline(t_token *tokens, char **envp, t_ms *ms)
         if (tmp_tokens)
             pipe(fd);
 
-        pid = fork();
+		pid = fork();
         if (pid < 0)
             error_msg("Error al crear el proceso hijo");
         if (pid == 0)
