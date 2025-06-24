@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 15:22:21 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/12 16:25:04 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/06/13 16:50:14 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/06/13 16:52:43 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_pwd(void)
+int ft_env(t_ms *ms)
 {
-	char cwd[PATH_MAX];
-	if (getcwd(cwd, sizeof(cwd)))
-		return (printf("%s\n", cwd), 0);
-	else
-		return (1);
+	t_env *env_list = ms->env_list;
+
+	if (!ms || !ms->env_list)
+		return (fprintf(stderr, "No environment variables set.\n"), 1);
+
+	while (env_list)
+	{
+		if (env_list->key)
+		{
+			if (env_list->value)
+				printf("%s=%s\n", env_list->key, env_list->value);
+			else
+				printf("%s=\n", env_list->key);
+		}
+		env_list = env_list->next;
+	}
+	
+	return 0;
 }

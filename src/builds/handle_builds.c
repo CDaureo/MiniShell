@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:41:47 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/12 15:31:04 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:05:42 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ int	handle_builds(char **argv, t_ms *ms)
 		ms->exit_status = ft_cd(argv, ms);
 	else if (ft_strcmp(argv[0], "pwd") == 0)
 		ms->exit_status = ft_pwd();
+	else if (ft_strcmp(argv[0], "echo") == 0)
+		ms->exit_status = ft_echo(argv);
+	else if (ft_strcmp(argv[0], "env") == 0)
+		ms->exit_status = ft_env(ms);
+	else if (ft_strcmp(argv[0], "export") == 0)
+		ms->exit_status = ft_export(argv, ms);
 	else if (ft_strcmp(argv[0], "exit") == 0)
     {
         ms->exit_status = 0;
