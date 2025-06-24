@@ -45,7 +45,8 @@ SRC     := 	ft_atoi.c \
 			ft_get_next_line.c \
 			ft_sqrt.c \
 			ft_free_split.c \
-			ft_strndup.c 
+			ft_strndup.c \
+			ft_strcmp.c
 
 OBJ     := $(SRC:.c=.o)
 

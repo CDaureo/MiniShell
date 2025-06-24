@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:12:20 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/11 14:01:33 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:02:20 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *head);
 int		ft_sqrt(int number);
 char	*ft_strndup(const char *s, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

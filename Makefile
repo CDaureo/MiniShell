@@ -25,13 +25,13 @@ SRC = $(SRC_FILES)/main.c \
       $(SRC_BUILDS)/export.c \
 	  $(SRC_BUILDS)/pwd.c \
 	  $(SRC_BUILDS)/cd.c \
-	  $(SRC_BUILDS)/exit.c
+	  $(SRC_BUILDS)/handle_builds.c \
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fPIE
-LDFLAGS = -lreadline -pie
+LDFLAGS = -lreadline -pie -Lsrc/library -lft
 
 GREEN = \033[1;32m
 BLUE = \033[1;34m

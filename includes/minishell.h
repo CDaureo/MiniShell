@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/13 16:42:56 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:09:49 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,9 @@ char *get_env_value(t_env *env, const char *key);
 t_env *init_env_list(char **envp);
 int		ft_pwd(void);
 t_env *init_env_list(char **envp);
+int		ft_env(t_ms *ms);
+int ft_echo(char **argv);
+int ft_export(char **argv, t_ms *ms);
 /* ************************************************************************** */
 /* ***************************PARSER FUNCTIONS******************************* */
 /* ************************************************************************** */
