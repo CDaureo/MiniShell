@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:39:35 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/12 17:12:04 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:26:17 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int ft_add_to_array(char ***array, const char *new_str)
 		return(0);
 	while ((*array)[i])
         i++;
-	printf("Processing word now: %s\n", (*array)[0]);
     new_array = malloc((i + 2) * sizeof(char *));
     if (!new_array)
 		return (-1);
@@ -61,5 +60,6 @@ int ft_add_to_array(char ***array, const char *new_str)
     new_array[i + 1] = NULL;
     free(*array);
     *array = new_array;
+	printf("Added string \n");
     return (0);
 }

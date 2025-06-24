@@ -153,12 +153,21 @@ void print_simple_cmds(t_simple_cmds *cmds)
     }
 }
 
+void print_tokens(t_token *tokens)
+{
+    t_token *current = tokens;
+    while (current)
+    {
+        printf("Token Type: %d, Value: %s\n", current->type, current->value);
+        current = current->next;
+    }
+}
+
 int main(void)
 {
-    const char *input = "echo Hello World > output.txt";
+    const char *input = "ls -l | echo Hello > output.txt";
     t_token *tokens = NULL;
     t_simple_cmds *cmds = NULL;
-	printf("Paso 1\n");
     // Step 1: Generate tokens using the lexer
     tokens = lexer(input);
     if (!tokens)
@@ -166,7 +175,8 @@ int main(void)
         fprintf(stderr, "Lexer failed to generate tokens.\n");
         return EXIT_FAILURE;
     }
-	printf("Paso 2\n");
+	printf("Tokens:\n");
+    print_tokens(tokens);
     // Step 2: Parse tokens into simple commands
     parse_simple_cmds(&tokens, &cmds);
     if (!cmds)
@@ -174,7 +184,6 @@ int main(void)
         fprintf(stderr, "Parsing failed to generate commands.\n");
         return EXIT_FAILURE;
     }
-	printf("Paso 3\n");
     // Step 3: Print the resulting command list
     print_simple_cmds(cmds);
 
