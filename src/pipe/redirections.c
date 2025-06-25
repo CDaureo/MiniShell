@@ -6,70 +6,36 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:20:04 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/12 17:44:17 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:33:17 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "../../includes/minishell.h"
 
 void apply_redirections(t_simple_cmds *cmd)
 {
-    t_token *tmp = cmd->redirections; // Accede a la lista de redirecciones del comando
+    t_token *redir = cmd->redirections;
     int fd;
 
-    while (tmp)
+    while (redir)
     {
-        if ((tmp->type == TOKEN_APPEND || tmp->specific == GREAT_GREAT) && tmp->value)
+        if (redir->type == TOKEN_REDIRECT) // >
         {
-            fd = open(tmp->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
-            if (fd < 0)
-            {
-                perror("minishell: redirection");
-                _exit(1);
-            }
-            if (dup2(fd, STDOUT_FILENO) < 0)
-            {
-                perror("minishell: dup2");
-                close(fd);
-                _exit(1);
-            }
+            fd = open(redir->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            dup2(fd, STDOUT_FILENO);
             close(fd);
         }
-        else if ((tmp->type == TOKEN_REDIRECT || tmp->specific == GREAT) && tmp->value)
+        else if (redir->type == TOKEN_APPEND) // >>
         {
-            fd = open(tmp->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-            if (fd < 0)
-            {
-                perror("minishell: redirection");
-                _exit(1);
-            }
-            if (dup2(fd, STDOUT_FILENO) < 0)
-            {
-                perror("minishell: dup2");
-                close(fd);
-                _exit(1);
-            }
+            fd = open(redir->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+            dup2(fd, STDOUT_FILENO);
             close(fd);
         }
-        else if ((tmp->type == TOKEN_REDIRECT || tmp->specific == LESS) && tmp->value)
-        {
-            fd = open(tmp->value, O_RDONLY);
-            if (fd < 0)
-            {
-                perror("minishell: redirection");
-                _exit(1);
-            }
-            if (dup2(fd, STDIN_FILENO) < 0)
-            {
-                perror("minishell: dup2");
-                close(fd);
-                _exit(1);
-            }
-            close(fd);
-        }
-        tmp = tmp->next;
+        // Puedes añadir aquí manejo para < y << si lo necesitas
+        printf("Redirigiendo tipo %d a archivo %s\n", redir->type, redir->value);
+        redir = redir->next;
     }
 }

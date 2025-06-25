@@ -6,29 +6,23 @@ void free_simple_cmds(t_simple_cmds *cmds)
 
     while (cmds)
     {
-        tmp = cmds;
-        cmds = cmds->next;
-
-        // Liberar el array de argumentos
-        if (tmp->str)
-            ft_free_split(tmp->str);
-
-        // Liberar la lista de redirecciones
-        t_token *redir = tmp->redirections;
-        while (redir)
+        tmp = cmds->next;
+        printf("Liberando comando...\n");
+        if (cmds->str)
         {
-            t_token *next_redir = redir->next;
-            if (redir->value)
-                free(redir->value);
-            free(redir);
-            redir = next_redir;
+            for (int i = 0; cmds->str[i]; i++) {
+                printf("  Liberando arg: %s\n", cmds->str[i]);
+                free(cmds->str[i]);
+            }
+            printf("  Liberando array de argumentos\n");
+            free(cmds->str);
         }
-
-        // Liberar el nombre del archivo heredoc si existe
-        if (tmp->hd_file_name)
-            free(tmp->hd_file_name);
-
-        // Liberar la estructura del comando
-        free(tmp);
+        // Si tienes redirecciones, pon prints aquí también
+        // printf("  Liberando redirecciones\n");
+        // free_redirections(cmds->redirections);
+        printf("  Liberando estructura comando\n");
+        free(cmds);
+        cmds = tmp;
     }
+    printf("Fin de free_simple_cmds\n");
 }

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:12:56 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/24 13:12:54 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:42:54 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+
 
 t_simple_cmds *create_simple_cmd(void)
 {
@@ -65,87 +67,65 @@ void add_simple_cmd(t_simple_cmds **cmds, t_simple_cmds *new_cmd)
 }
 
 //Esta hay que acortarla de columna y de lineas
-void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds *current_cmd, t_token *current_token)
+void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds **current_cmd, t_token **current_token)
 {
     t_token *redir;
-    t_token *prev_token = NULL;
+    t_token *tmp;
+    (void)tokens;
+    if (!*current_token)
+        return;
 
-    while (current_token)
+    if ((*current_token)->type == TOKEN_PIPE)
     {
-		if (current_cmd) {
-			printf("Current command: %s\n", current_cmd->str ? current_cmd->str[0] : "NULL");
-		} else {
-			printf("Error: current_cmd is NULL\n");
-		}
-		if (current_token) {
-			printf("Current token: ");
-			printf("%s\n", current_token->value);
-		} else {
-			printf("Error: current_token is NULL\n");
-		}
-        if (current_token->type == TOKEN_PIPE)
-        {
-            // Add the current command to the list of commands
-            add_simple_cmd(cmds, current_cmd);
-            printf("Pipe detected. Starting a new command.\n");
-
-            // Create a new command
-            current_cmd = create_simple_cmd();
-
-            // Update the token list
-            if (prev_token)
-                prev_token->next = current_token->next;
-            free(current_token);
-            current_token = prev_token ? prev_token->next : *tokens;
-			printf("New command created, continuing with the next token.\n");
-        }
-		else if (current_token->type == TOKEN_APPEND || current_token->type == TOKEN_REDIRECT)
-		{
-			printf("Redirection token detected:");
-			printf("%s\n", current_token->value);
-
-			// Handle redirection
-			redir = malloc(sizeof(t_token));
-			if (redir)
-			{
-				*redir = *current_token;
-				redir->next = current_cmd->redirections;
-				current_cmd->redirections = redir;
-				current_cmd->num_redirections++;
-			}
-
-			// Update the token list and free the current token
-			t_token *temp = current_token;
-			current_token = current_token->next;
-			if (prev_token)
-				prev_token->next = current_token;
-			else
-				*tokens = current_token;
-			free(temp);
-		}
-		else
-		{
-			printf("String token detected:");
-			printf( "'%s'\n", current_token->value);
-			// Add the token to the current command's arguments
-			ft_add_to_array(&current_cmd->str, current_token->value);
-			printf("Added string '%s' to the current command.\n", current_token->value);
-
-			// Free the current token and move to the next one
-			t_token *temp = current_token;
-			current_token = current_token->next;
-			if (prev_token)
-				prev_token->next = current_token;
-			else
-				*tokens = current_token;
-			free(temp);
-		}
+        add_simple_cmd(cmds, *current_cmd);
+        *current_cmd = create_simple_cmd();
+        tmp = *current_token;
+        *current_token = (*current_token)->next;
+        free(tmp->value);
+        free(tmp);
     }
-    // Add the last command to the list of commands
-    if (current_cmd)
+    else if (
+        (*current_token)->type == TOKEN_APPEND ||
+        (*current_token)->type == TOKEN_REDIRECT ||
+        (*current_token)->type == TOKEN_INPUT ||
+        (*current_token)->type == TOKEN_HEREDOC)
     {
-        add_simple_cmd(cmds, current_cmd);
-        printf("End of input. Adding the last command.\n");
+        // Verifica que hay un token siguiente (el archivo)
+        if ((*current_token)->next)
+        {
+            redir = malloc(sizeof(t_token));
+            if (redir)
+            {
+                redir->type = (*current_token)->type;
+                redir->value = ft_strdup((*current_token)->next->value);
+                redir->next = (*current_cmd)->redirections;
+                (*current_cmd)->redirections = redir;
+                (*current_cmd)->num_redirections++;
+            }
+            // Libera ambos tokens
+            tmp = *current_token;
+            *current_token = (*current_token)->next->next;
+            free(tmp->next->value);
+            free(tmp->next);
+            free(tmp->value);
+            free(tmp);
+        }
+        else
+        {
+            // Error: redirección sin archivo
+            tmp = *current_token;
+            *current_token = (*current_token)->next;
+            free(tmp->value);
+            free(tmp);
+        }
+    }
+    else
+    {
+        ft_add_to_array(&(*current_cmd)->str, (*current_token)->value);
+        tmp = *current_token;
+        *current_token = (*current_token)->next;
+        free(tmp->value);
+        free(tmp);
     }
 }
 
@@ -158,7 +138,7 @@ void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds)
 	current_token = *tokens;
 	while (current_token)
 	{
-		command_types(tokens, cmds, current_cmd, current_token);
+		command_types(tokens, cmds, &current_cmd, &current_token);
 	}
 	if (current_cmd->str || current_cmd->redirections)
 		add_simple_cmd(cmds, current_cmd);

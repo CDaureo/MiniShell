@@ -6,40 +6,43 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 12:06:39 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/12 17:10:44 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:55:17 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void handle_append(t_token **tokens, int type, int subtype, const char *value, int *i, int increment)
+void handle_append(t_token **tokens, int type, const char *value, int *i, int increment)
 {
-	append_token(tokens, create_token(type, subtype, value));
+	append_token(tokens, create_token(type, value));
 	*i += increment;
 }
 
 void	handle_pipes(int *i, t_token **tokens)
 {
-	append_token(tokens, create_token(TOKEN_PIPE, PIPE, "|"));
+	append_token(tokens, create_token(TOKEN_PIPE, "|"));
 	(*i)++;
 }
 
 void	handle_redirections(const char *input, int *i, t_token **tokens)
 {
-	if (input[*i] == '>')
-	{
-		if (input[*i + 1] == '>')
-			handle_append(tokens, TOKEN_APPEND, GREAT_GREAT, ">>", i, 2);
-		else
-			handle_append(tokens, TOKEN_APPEND, GREAT, ">", i, 2);
-	}
-	else if (input[*i] == '<')
-	{
-		if (input[*i + 1] == '<')              
-			handle_append(tokens, TOKEN_APPEND, LESS_LESS, "<<", i, 2);
-		else
-			handle_append(tokens, TOKEN_APPEND, LESS, "<", i, 2);
-	}
+    if (input[*i] == '>')
+    {
+        if (input[*i + 1] == '>')
+		{
+		printf("%c\n", input[*i]);          
+	  	handle_append(tokens, TOKEN_APPEND, ">>", i, 2);
+		}
+        else
+            handle_append(tokens, TOKEN_REDIRECT, ">", i, 1);
+    }
+    else if (input[*i] == '<')
+    {
+        if (input[*i + 1] == '<')              
+            handle_append(tokens, TOKEN_HEREDOC, "<<", i, 2);
+        else
+            handle_append(tokens, TOKEN_INPUT, "<", i, 1);
+    }
 }
 
 static char	*handle_quotes(const char *input, int *i)
@@ -78,6 +81,6 @@ void	handle_words(const char *input, int *i, t_token **tokens)
 			(*i)++;
 		word = ft_strndup(&input[start], *i - start);
 	}
-	append_token(tokens, create_token(TOKEN_WORD, 0, word));
+	append_token(tokens, create_token(TOKEN_WORD, word));
 	free(word);
 }

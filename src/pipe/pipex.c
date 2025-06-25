@@ -6,110 +6,74 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/12 17:29:15 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:46:49 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//Esta función convierte una lista de tokens en un array de strings
-//para pasar directamente a execve.
-char **tokens_to_str(t_token *tokens)
-{
-	int count;
-	int i;
-	t_token *tkn = tokens;
-	char **argv;
-	count = 0;
-	i = 0;
-	// Contar cuántos tokens son de tipo TOKEN_WORD seguidos (hasta PIPE o NULL)
-	while(tkn && tkn->type != TOKEN_PIPE)
-	{
-		if (tkn->type == TOKEN_WORD || tkn->type == TOKEN_REDIRECT || 
-				tkn->type == TOKEN_APPEND)
-			count++;
-		tkn = tkn->next;
-	}
-	argv = malloc(sizeof(char *) * (count + 1));
-	if (!argv)
-		return (NULL);
-	tkn = tokens;
-	while (i < count)
-	{
-		argv[i] = ft_strdup(tkn->value);
-		tkn = tkn->next;
-		i++;
-	}
-	argv[i] = NULL;
-	return argv;	
-}
-
 static void	run_command_in_pipeline(
-    t_token *start_cmd, t_token *tmp_tokens, int previous_fd, char **envp, t_ms *ms)
+    t_simple_cmds *cmd, int previous_fd, int *fd, char **envp, t_ms *ms)
 {
-    int fd[2];
-    char **argv = tokens_to_str(start_cmd);
-    char *path = get_cmd_path(argv[0], envp);
-
-    if (tmp_tokens)
+    if (fd) // Si hay siguiente comando, redirige stdout al pipe
     {
-        pipe(fd);
-        close(fd[0]);
         dup2(fd[1], STDOUT_FILENO);
         close(fd[1]);
     }
-    if (previous_fd != -1)
+    if (previous_fd != -1) // Si hay anterior, redirige stdin al pipe anterior
     {
         dup2(previous_fd, STDIN_FILENO);
         close(previous_fd);
     }
+    // Aplica redirecciones del comando
+    apply_redirections(cmd);
 
-    // Ejecutar builtins en el hijo si están en una tubería
-    if (argv[0] && handle_builds(argv, ms))
+    // Ejecuta builtins en el hijo si están en una tubería
+    if (cmd->str && handle_builds(cmd->str, ms))
         exit(0);
 
+    // Antes de buscar el path o ejecutar el comando
+    if (!cmd->str || !cmd->str[0])
+        exit(0); // O return, según el contexto
+
+    char *path = get_cmd_path(cmd->str[0], envp);
     if (path)
     {
-        execve(path, argv, envp);
-		free(path);
+        execve(path, cmd->str, envp);
+        free(path);
     }
-    error_msg(argv[0]);
+    error_msg(cmd->str[0]);
     exit(1);
 }
 
-void execute_pipeline(t_token *tokens, char **envp, t_ms *ms)
+void execute_pipeline(t_simple_cmds *cmds, char **envp, t_ms *ms)
 {
     pid_t pid;
-    t_token *start_cmd = tokens;
-    t_token *tmp_tokens = tokens;
     int previous_fd = -1;
     int fd[2];
+    t_simple_cmds *cmd = cmds;
 
-    while (start_cmd)
+    while (cmd)
     {
-        tmp_tokens = start_cmd;
-        while (tmp_tokens && tmp_tokens->type != TOKEN_PIPE)
-            tmp_tokens = tmp_tokens->next;
-
-        if (tmp_tokens)
+        if (cmd->next)
             pipe(fd);
+        else
+            fd[0] = fd[1] = -1;
 
-		pid = fork();
+        pid = fork();
         if (pid < 0)
             error_msg("Error al crear el proceso hijo");
         if (pid == 0)
-            run_command_in_pipeline(start_cmd, tmp_tokens, previous_fd, envp, ms);
+            run_command_in_pipeline(cmd, previous_fd, cmd->next ? fd : NULL, envp, ms);
 
         if (previous_fd != -1)
             close(previous_fd);
-        if (tmp_tokens)
+        if (cmd->next)
         {
             close(fd[1]);
             previous_fd = fd[0];
-            start_cmd = tmp_tokens->next;
         }
-        else
-            start_cmd = NULL;
+        cmd = cmd->next;
     }
     while (wait(NULL) != -1)
         ;

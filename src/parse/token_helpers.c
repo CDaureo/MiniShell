@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:40:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/12 17:10:48 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:59:09 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int	check_input(const char *input, int i)
 {
 	if (input[i] == '|' || input[i] == '>' || input[i] == '<')
 	{
-		if (input[i + 1] && (input[i + 1] == '|' || input[i + 1] == '>' || input[i + 1] == '<'))
-			return (0);
+		if (input[i + 1] && (input[i + 1] == '>' || input[i + 1] == '<'))
+			return (1);
 	}
 	else if (ft_strchr(" \t\n\v\f\r", input[i]))
 		return (0);
 	return (1);
 }
 
-t_token *create_token(t_token_type type, t_tokens specific, const char *value)
+t_token *create_token(t_token_type type, const char *value)
 {
     t_token *token;
 
@@ -33,7 +33,6 @@ t_token *create_token(t_token_type type, t_tokens specific, const char *value)
     if (!token)
         return NULL;
     token->type = type;
-    token->specific = specific;
 	if (value)
 		token->value = ft_strdup(value);
 	else 
@@ -59,17 +58,16 @@ void append_token(t_token **head, t_token *new_token)
 
 void free_tokens(t_token *tokens)
 {
-    t_token	*current;
-	t_token	*next;
-	
-	current = tokens;
-    while (current)
+    t_token *tmp;
+    while (tokens)
     {
-        next = current->next;
-        free(current->value);
-        free(current);
-        current = next;
+        tmp = tokens->next;
+        printf("Liberando token: %s\n", tokens->value);
+        free(tokens->value);
+        free(tokens);
+        tokens = tmp;
     }
+    printf("Fin de free_tokens\n");
 }
 
 t_token *lexer(const char *input)
@@ -87,12 +85,26 @@ t_token *lexer(const char *input)
 			continue;
 		}
 		if(!check_input(input, i))
-			return (NULL);
+		{
+		printf("%c\n", input[i]);
+		return (NULL);
+		}
+		printf("%c\n", input[i]);
 		if (input[i] == '|')
+		{
+			printf("%c\n", input[i]);
 			handle_pipes(&i, &tokens);
+		}
 		else if (input[i] == '>' || input[i] == '<')
+		{
+			printf("redir encontrada\n");
+			printf("%c\n", input[i]);
 			handle_redirections(input, &i, &tokens);
-		else
+			printf("redir hecha\n");
+			printf("%c\n", input[i]);
+
+		}
+			else
 			handle_words(input, &i, &tokens);
 	}
 	return (tokens);

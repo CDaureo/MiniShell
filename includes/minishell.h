@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/24 11:09:49 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:19:31 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ typedef enum e_token_type
     TOKEN_WORD,
     TOKEN_PIPE,
     TOKEN_APPEND,
-    TOKEN_REDIRECT
+    TOKEN_REDIRECT,
+	TOKEN_INPUT,
+	TOKEN_HEREDOC
+
 } t_token_type;	
 
 typedef enum s_tokens
@@ -49,7 +52,6 @@ typedef enum s_tokens
 typedef struct s_token
 {
     t_token_type type;
-    t_tokens specific;
     char *value;
 	struct s_token *next;
 } t_token;
@@ -91,6 +93,7 @@ typedef struct s_simple_cmds
 void minishell_init(t_ms *ms);
 char *find_executable(char *cmd, char **paths);
 void error_msg(const char *msg);
+void free_simple_cmds(t_simple_cmds *cmds);
 /* ************************************************************************** */
 /* ************************LIBRARY FUNCTIONS********************************* */
 /* ************************************************************************** */
@@ -101,14 +104,14 @@ char	*ft_strchr(const char *s, int c);
 /* ************************************************************************** */
 /* **************************TOKEN FUNCTIONS********************************* */
 /* ************************************************************************** */
-t_token	*create_token(t_token_type type, t_tokens specific, const char *value);
+t_token	*create_token(t_token_type type, const char *value);
 void	append_token(t_token **head, t_token *new_token);
 void	free_tokens(t_token *tokens);
 t_token	*lexer(const char *input);
 /* ************************************************************************** */
 /* ***************************HANDLER FUNCTIONS****************************** */
 /* ************************************************************************** */
-void	handle_append(t_token **tokens, int type, int subtype, \
+void	handle_append(t_token **tokens, int type, \
 	const char *value, int *i, int increment);
 void	handle_pipes(int *i, t_token **tokens);
 void	handle_redirections(const char *input, int *i, t_token **tokens);
@@ -119,7 +122,7 @@ void	handle_words(const char *input, int *i, t_token **tokens);
 void	pipex(t_ms *ms);
 void	free_pathstr(char **arr);
 char *get_cmd_path(char *cmd, char **envp);
-void execute_pipeline(t_token *tokens, char **envp, t_ms *ms);
+void execute_pipeline(t_simple_cmds *cmds, char **envp, t_ms *ms);
 void apply_redirections(t_simple_cmds *redirection);
 /* ************************************************************************** */
 /* ***************************BUILDS FUNCTIONS******************************* */
@@ -139,5 +142,5 @@ int ft_export(char **argv, t_ms *ms);
 /* ************************************************************************** */
 /* ***************************PARSER FUNCTIONS******************************* */
 /* ************************************************************************** */
-void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds *current_cmd, t_token *current_token);
-
+void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds **current_cmd, t_token **current_token);
+void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds);
