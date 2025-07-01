@@ -18,7 +18,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds);
 void free_simple_cmds(t_simple_cmds *cmds);
 
 int main(int argc, char **argv, char **envp)
@@ -39,8 +38,7 @@ int main(int argc, char **argv, char **envp)
 
     char *home_dir = getenv("HOME");
     if (home_dir)
-        chdir(home_dir);
-
+		chdir(home_dir);
     while (1)
     {
 		pw = getpwuid(getuid());
@@ -97,7 +95,7 @@ int main(int argc, char **argv, char **envp)
             if (tokens)
             {
                 t_simple_cmds *cmds = NULL;
-                parse_simple_cmds(&tokens, &cmds);
+                parse_simple_cmds(&tokens, &cmds, &ms);
 
                 if (cmds && cmds->next)
                     execute_pipeline(cmds, envp, &ms);

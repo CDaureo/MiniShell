@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:12:56 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/25 18:42:54 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:12:32 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
 
 t_simple_cmds *create_simple_cmd(void)
 {
@@ -35,7 +33,6 @@ void add_simple_cmd(t_simple_cmds **cmds, t_simple_cmds *new_cmd)
 {
     t_simple_cmds *temp;
 
-    // Print the command being added (all strings in the array)
     printf("Start Add: Adding command [");
     if (new_cmd->str)
     {
@@ -43,7 +40,7 @@ void add_simple_cmd(t_simple_cmds **cmds, t_simple_cmds *new_cmd)
         {
             printf("'%s'", new_cmd->str[i]);
             if (new_cmd->str[i + 1])
-                printf(", "); // Add a comma between arguments
+                printf(", ");
         }
     }
     else
@@ -62,12 +59,11 @@ void add_simple_cmd(t_simple_cmds **cmds, t_simple_cmds *new_cmd)
         temp->next = new_cmd;
     }
 
-    // Confirm the command was added
     printf("End Add: Command added successfully\n");
 }
 
 //Esta hay que acortarla de columna y de lineas
-void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds **current_cmd, t_token **current_token)
+void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds **current_cmd, t_token **current_token, t_ms *ms)
 {
     t_token *redir;
     t_token *tmp;
@@ -121,7 +117,7 @@ void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds **curre
     }
     else
     {
-        ft_add_to_array(&(*current_cmd)->str, (*current_token)->value);
+        ft_add_to_array(&(*current_cmd)->str, (*current_token)->value, ms->exit_status);
         tmp = *current_token;
         *current_token = (*current_token)->next;
         free(tmp->value);
@@ -129,7 +125,7 @@ void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds **curre
     }
 }
 
-void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds)
+void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds, t_ms *ms)
 {
 	t_simple_cmds *current_cmd;
 	t_token *current_token;
@@ -138,7 +134,7 @@ void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds)
 	current_token = *tokens;
 	while (current_token)
 	{
-		command_types(tokens, cmds, &current_cmd, &current_token);
+		command_types(tokens, cmds, &current_cmd, &current_token, ms);
 	}
 	if (current_cmd->str || current_cmd->redirections)
 		add_simple_cmd(cmds, current_cmd);

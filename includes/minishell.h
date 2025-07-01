@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/25 18:19:31 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:11:27 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,5 @@ int ft_export(char **argv, t_ms *ms);
 /* ************************************************************************** */
 /* ***************************PARSER FUNCTIONS******************************* */
 /* ************************************************************************** */
-void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds **current_cmd, t_token **current_token);
-void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds);
+void command_types(t_token **tokens, t_simple_cmds **cmds, t_simple_cmds **current_cmd, t_token **current_token, t_ms *ms);
+void parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds, t_ms *ms);

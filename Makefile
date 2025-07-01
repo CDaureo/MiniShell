@@ -39,9 +39,20 @@ YELLOW = \033[1;33m
 RED = \033[1;31m
 RESET = \033[0m
 
-all: libft/libft.a $(NAME)
+all: banner libft/libft.a $(NAME)
 	@echo "$(GREEN)✅ Compilación completada: $(NAME)$(RESET)"
 # @toilet -f ivrit -F crop MINISHELL
+
+banner:
+	@echo "$(GREEN) _   .-')                 .-') _          .-')    ('-. .-.   ('-. $(RESET)"
+	@echo "$(GREEN)( '.( OO )_              ( OO ) )        ( OO ). ( OO )  / _(  OO)$(RESET)"
+	@echo "$(GREEN) ,--.   ,--.) ,-.-') ,--./ ,--,' ,-.-') (_)---\_),--. ,--.(,------.,--.      ,--.$(RESET)"
+	@echo "$(GREEN) |   \`.'   |  |  |OO)|   \ |  |\ |  |OO)/    _ | |  | |  | |  .---'|  |.-')  |  |.-')$(RESET)"
+	@echo "$(GREEN) |         |  |  |  \|    \|  | )|  |  \\\  :\` \`.  |   .|  | |  |    |  | OO ) |  | OO )$(RESET)"
+	@echo "$(GREEN) |  |'.'|  |  |  |(_/|  .     |/ |  |(_/ '..\`''.)|       |(|  '--. |  |\`-' | |  |\`-' |$(RESET)"
+	@echo "$(GREEN) |  |   |  | ,|  |_.'|  |\    | ,|  |_.'.-._)   \|  .-.  | |  .--'(|  '---.'(|  '---.'$(RESET)"
+	@echo "$(GREEN) |  |   |  |(_|  |   |  | \   |(_|  |   \       /|  | |  | |  \`---.|      |  |      |$(RESET)"
+	@echo "$(GREEN) \`--'   \`--'  \`--'   \`--'  \`--'  \`--'    \`-----' \`--' \`--' \`------'\`------'  \`------'$(RESET)"
 
 libft/libft.a:
 	@$(MAKE) --no-print-directory -C src/library

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_helpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:40:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/25 18:59:09 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:57:31 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,26 +85,12 @@ t_token *lexer(const char *input)
 			continue;
 		}
 		if(!check_input(input, i))
-		{
-		printf("%c\n", input[i]);
-		return (NULL);
-		}
-		printf("%c\n", input[i]);
+			return (NULL);
 		if (input[i] == '|')
-		{
-			printf("%c\n", input[i]);
 			handle_pipes(&i, &tokens);
-		}
 		else if (input[i] == '>' || input[i] == '<')
-		{
-			printf("redir encontrada\n");
-			printf("%c\n", input[i]);
 			handle_redirections(input, &i, &tokens);
-			printf("redir hecha\n");
-			printf("%c\n", input[i]);
-
-		}
-			else
+		else
 			handle_words(input, &i, &tokens);
 	}
 	return (tokens);
