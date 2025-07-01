@@ -1,14 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 18:32:31 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/12 17:23:30 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/07/01 17:01:54 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/07/01 17:02:16 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/libft.h"
 
+char	*ft_strcpy(char *dst, const char *src)
+{
+    int	i;
+
+    i = 0;
+    while (src[i])
+    {
+        dst[i] = src[i];
+        i++;
+    }
+    dst[i] = '\0';
+    return (dst);
+}

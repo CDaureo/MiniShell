@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:05:53 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/13 18:09:07 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:43:35 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int ft_export(char **argv, t_ms *ms)
 	int i;
 
 	i = 1;
-	if (!argv)
+	if (!argv[1])
 	{
    		t_env *env_list = ms->env_list;
         while (env_list)

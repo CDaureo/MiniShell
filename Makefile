@@ -9,8 +9,8 @@ SRC_PIPE = $(SRC_FILES)/pipe
 SRC_BUILDS = $(SRC_FILES)/builds
 
 SRC = $(SRC_FILES)/main.c \
-      $(SRC_UTILS)/utils.c \
 	  $(SRC_UTILS)/free_simple_cmds.c \
+	  $(SRC_UTILS)/signals.c \
       $(SRC_ERRORS)/errors.c \
       $(SRC_PARSING)/parse.c \
       $(SRC_PARSING)/handlers.c \
@@ -26,6 +26,8 @@ SRC = $(SRC_FILES)/main.c \
 	  $(SRC_BUILDS)/pwd.c \
 	  $(SRC_BUILDS)/cd.c \
 	  $(SRC_BUILDS)/handle_builds.c \
+	  $(SRC_BUILDS)/unset.c
+
 
 OBJ = $(SRC:.c=.o)
 

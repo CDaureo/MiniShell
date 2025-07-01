@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 20:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/11 13:00:46 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:45:46 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,28 @@ char **copy_envp(char **envp)
     return copy;
 }
 
-void update_env_var(t_env *env, const char *key, const char *value)
+void update_env_var(t_env *env_list, const char *key, const char *value)
 {
-    while (env)
+    t_env *tmp = env_list;
+    while (tmp)
     {
-        if (ft_strcmp(env->key, key) == 0)
+        if (strcmp(tmp->key, key) == 0)
         {
-            free(env->value);
-            env->value = ft_strdup(value);
+            free(tmp->value);
+            tmp->value = value ? strdup(value) : NULL;
             return;
         }
-        env = env->next;
+        if (!tmp->next)
+            break;
+        tmp = tmp->next;
     }
+    // Si no existe, añadir al final
+    t_env *new = malloc(sizeof(t_env));
+    new->key = strdup(key);
+    new->value = value ? strdup(value) : NULL;
+    new->next = NULL;
+    if (tmp)
+        tmp->next = new;
 }
 
 t_env *init_env_list(char **envp)

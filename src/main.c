@@ -1,14 +1,14 @@
-///* ************************************************************************** */
-///*                                                                            */
-///*                                                        :::      ::::::::   */
-///*   main.c                                             :+:      :+:    :+:   */
-///*                                                    +:+ +:+         +:+     */
-///*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
-///*                                                +#+#+#+#+#+   +#+           */
-///*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-///*   Updated: 2025/06/12 16:38:08 by simgarci         ###   ########.fr       */
-///*                                                                            */
-///* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/07/01 18:35:24 by cdaureo-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <unistd.h>   // getcwd, gethostname
@@ -18,8 +18,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void free_simple_cmds(t_simple_cmds *cmds);
-
 int main(int argc, char **argv, char **envp)
 {
     (void)argc;
@@ -27,8 +25,6 @@ int main(int argc, char **argv, char **envp)
     char *line;
     t_token *tokens;
     t_ms ms;
-    ms.envp = copy_envp(envp);
-    ms.env_list = init_env_list(envp);
 
     char cwd[4096];
     char hostname[256];
@@ -36,39 +32,50 @@ int main(int argc, char **argv, char **envp)
     char *user;
     struct passwd *pw;
 
-    char *home_dir = getenv("HOME");
-    if (home_dir)
-		chdir(home_dir);
+
+    ms.envp = copy_envp(envp);
+    ms.env_list = init_env_list(envp);
+	setup_signals();
     while (1)
     {
-		pw = getpwuid(getuid());
-		if (pw && pw->pw_name)
-		    user = pw->pw_name;
-		else
-		    user = "user";
+        pw = getpwuid(getuid());
+        if (pw && pw->pw_name)
+            user = pw->pw_name;
+        else
+            user = "user";
 
         if (gethostname(hostname, sizeof(hostname)) != 0)
-            strcpy(hostname, "minishell");
+            ft_strcpy(hostname, "minishell");
 
-        if (!getcwd(cwd, sizeof(cwd)))
-            strcpy(cwd, "~");
+        char *pwd_env = get_env_value(ms.env_list, "PWD");
+        if (pwd_env)
+            ft_strlcpy(cwd, pwd_env, sizeof(cwd));
+        else if (!getcwd(cwd, sizeof(cwd)))
+            ft_strcpy(cwd, "~");
 
-        // Obtener $HOME
         char *home = getenv("HOME");
         char *display_cwd = cwd;
+        int display_malloced = 0;
 
-        // Si cwd empieza por $HOME, reemplaza por ~
-        if (home && strncmp(cwd, home, ft_strlen(home)) == 0)
+        if ((home && ft_strcmp(cwd, home) == 0))
         {
-            // +1 para el slash final, si quieres ~/ en vez de solo ~
+            display_cwd = "~";
+            display_malloced = 0;
+        }
+        else if (home)
+        {
             size_t home_len = ft_strlen(home);
-            size_t new_len = ft_strlen(cwd) - home_len + 2;
-            char *tmp = malloc(new_len);
-            if (tmp)
+            if (ft_strncmp(cwd, home, home_len) == 0 && cwd[home_len] == '/')
             {
-                tmp[0] = '~';
-                strcpy(tmp + 1, cwd + home_len);
-                display_cwd = tmp;
+                size_t new_len = ft_strlen(cwd) - home_len + 2;
+                char *tmp = malloc(new_len);
+                if (tmp)
+                {
+                    tmp[0] = '~';
+                    ft_strcpy(tmp + 1, cwd + home_len);
+                    display_cwd = tmp;
+                    display_malloced = 1;
+                }
             }
         }
 
@@ -81,16 +88,14 @@ int main(int argc, char **argv, char **envp)
 
         line = readline(prompt);
         free(prompt);
-        if (display_cwd != cwd)
+        // Solo liberar si display_cwd fue malloc'd
+        if (display_malloced)
             free(display_cwd);
         if (!line)
             break;
         if (*line)
         {
-			printf("caca");
             add_history(line);
-			printf("caca");
-
             tokens = lexer(line);
             if (tokens)
             {
@@ -101,125 +106,35 @@ int main(int argc, char **argv, char **envp)
                     execute_pipeline(cmds, envp, &ms);
                 else if (cmds)
                 {
-                    // Ejecutar comando simple con redirecciones
                     pid_t pid = fork();
                     if (pid == 0)
                     {
                         apply_redirections(cmds);
-                        if (cmds->str && handle_builds(cmds->str, &ms))
-                            exit(0);
-                        char *path = get_cmd_path(cmds->str[0], envp);
-                        if (path)
-                        {
-                            execve(path, cmds->str, envp);
-                            perror("execve");
-                        }
-                        exit(1);
+                        handle_builds(cmds->str, &ms);
+                        exit(0); // Termina el hijo tras ejecutar el comando
                     }
                     else if (pid > 0)
                     {
                         int status;
                         waitpid(pid, &status, 0);
+                        // Actualiza exit_status si quieres
                     }
-                    else
-                        perror("fork");
                 }
-
-
-				t_simple_cmds *tmp = cmds;
-				int n = 1;
-				while (tmp)
-				{
-				    printf("CMD %d:\n", n++);
-				    for (int i = 0; tmp->str && tmp->str[i]; i++)
-				        printf("  ARG[%d]: %s\n", i, tmp->str[i]);
-				    for (t_token *r = tmp->redirections; r; r = r->next)
-				        printf("  REDIR: type=%d, value=%s\n", r->type, r->value);
-				    tmp = tmp->next;
-				}
-				free_simple_cmds(cmds);
-				printf("Comandos liberados\n");
+                t_simple_cmds *tmp = cmds;
+                int n = 1;
+                while (tmp)
+                {
+                    printf("CMD %d:\n", n++);
+                    for (int i = 0; tmp->str && tmp->str[i]; i++)
+                        printf("  ARG[%d]: %s\n", i, tmp->str[i]);
+                    for (t_token *r = tmp->redirections; r; r = r->next)
+                        printf("  REDIR: type=%d, value=%s\n", r->type, r->value);
+                    tmp = tmp->next;
+                }
+                free_simple_cmds(cmds);
+                printf("Comandos liberados\n");
             }
         }
     }
     return 0;
 }
-/*
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-// Assuming these functions and structs are defined elsewhere
-t_token *lexer(const char *input);
-
-
-// Updated helper function to print simple commands
-void print_simple_cmds(t_simple_cmds *cmds)
-{
-    t_simple_cmds *current = cmds;
-    while (current)
-    {
-        // Print command tokens (array of arrays)
-        printf("Command:\n");
-        for (int i = 0; current->str && current->str[i]; i++)
-        {
-            printf("  Token[%d]: %s\n", i, current->str[i]);
-        }
-
-        // Print redirections (t_token struct)
-        if (current->redirections)
-        {
-            printf("Redirections:\n");
-            t_token *redir = current->redirections;
-            while (redir)
-            {
-                printf("  Type: %d, Value: %s\n", redir->type, redir->value);
-                redir = redir->next;
-            }
-        }
-
-        current = current->next;
-    }
-}
-
-void print_tokens(t_token *tokens)
-{
-    t_token *current = tokens;
-    while (current)
-    {
-        printf("Token Type: %d, Value: %s\n", current->type, current->value);
-        current = current->next;
-    }
-}
-
-int main(void)
-{
-    const char *input = "ls -l | echo Hello >> output.txt | cat hola > out";
-    t_token *tokens = NULL;
-    t_simple_cmds *cmds = NULL;
-    // Step 1: Generate tokens using the lexer
-    tokens = lexer(input);
-    if (!tokens)
-    {
-        fprintf(stderr, "Lexer failed to generate tokens.\n");
-        return EXIT_FAILURE;
-    }
-	printf("Tokens:\n");
-    print_tokens(tokens);
-    // Step 2: Parse tokens into simple commands
-    parse_simple_cmds(&tokens, &cmds);
-    if (!cmds)
-    {
-        fprintf(stderr, "Parsing failed to generate commands.\n");
-        return EXIT_FAILURE;
-    }
-    // Step 3: Print the resulting command list
-    print_simple_cmds(cmds);
-
-    // Free allocated memory
-    //free_tokens(tokens);
-    //free_simple_cmds(cmds);
-
-    return EXIT_SUCCESS;
-}
-*/

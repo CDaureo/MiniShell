@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:12:20 by simgarci          #+#    #+#             */
-/*   Updated: 2025/07/01 14:08:22 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:02:37 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ int		ft_lstsize(t_list *head);
 int		ft_sqrt(int number);
 char	*ft_strndup(const char *s, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strcpy(char *dst, const char *src);
 
 #endif
