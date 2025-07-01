@@ -1,6 +1,6 @@
 # Minishell
 
-## Lista de tareas (TODO)
+## Lista de tareas (TO DO)
 
 - [✅] **Mostrar una entrada** mientras espera un comando nuevo.
 - [✅] **Tener un historial funcional.**
@@ -15,7 +15,7 @@
   - `>>` debe redirigir el output en modo append. [❌]
 - [✅] **Implementar pipes** (carácter `|`). El output de cada comando en la pipeline se conecta a través de un pipe al input del siguiente comando.
 - [✅] Gestionar las **variables de entorno** (`$` seguidos de caracteres) que deberán expandirse a sus valores.
-- [❌] Gestionar `$?`, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
+- [🔁] Gestionar `$?`, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
 - Gestionar señales que funcionan como en bash:
   - `ctrl-C` [❌]
   - `ctrl-D` [❌]
@@ -25,12 +25,12 @@
   - `ctrl-D` termina el shell. [❌]
   - `ctrl-\` no hace nada. [❌]
 - **Implementar los built-ins:**
-  - `echo` con la opción `-n`. [❌]
-  - `cd` solo con una ruta relativa o absoluta. [❌]
-  - `pwd` sin opciones. [❌]
+  - `echo` con la opción `-n`. [🔁]
+  - `cd` solo con una ruta relativa o absoluta. [✅]
+  - `pwd` sin opciones. [✅]
   - `export` sin opciones. [❌]
   - `unset` sin opciones. [❌]
-  - `env` sin opciones o argumentos. [❌]
+  - `env` sin opciones o argumentos. [✅]
   - `exit` sin opciones. [❌]
 
 ---

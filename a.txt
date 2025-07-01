@@ -1,7 +1,0 @@
-a.txt
-includes
-Makefile
-minishell
-pdf
-README.md
-src
