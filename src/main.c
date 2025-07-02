@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/02 17:24:37 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:29:40 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int main(int argc, char **argv, char **envp)
     char *line;
     t_token *tokens;
     t_ms ms;
+	ms.exit_status = 0; 
 
     char cwd[4096];
     char hostname[256];
