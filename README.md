@@ -25,13 +25,13 @@
   - `ctrl-D` termina el shell. [✅]
   - `ctrl-\` no hace nada. [🔁]
 - **Implementar los built-ins:**
-  - `echo` con la opción `-n`. [🔁]
-  - `cd` solo con una ruta relativa o absoluta. [🔁]
+  - `echo` con la opción `-n`. [✅]
+  - `cd` solo con una ruta relativa o absoluta. [✅]
   - `pwd` sin opciones. [✅]
-  - `export` sin opciones. [🔁]
-  - `unset` sin opciones. [🔁]
+  - `export` sin opciones. [✅]
+  - `unset` sin opciones. [✅]
   - `env` sin opciones o argumentos. [✅]
-  - `exit` sin opciones. [✅]
+  - `exit` sin opciones. [🔁]
 
 ---
 
