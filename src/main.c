@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/02 16:58:15 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:19:59 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,13 @@ int main(int argc, char **argv, char **envp)
 
         line = readline(prompt);
         free(prompt);
-        // Solo liberar si display_cwd fue malloc'd
         if (display_malloced)
             free(display_cwd);
         if (!line)
-            break;
+        {
+            printf("exit\n");
+            exit(0);
+        }
         if (*line)
         {
             add_history(line);
@@ -106,34 +108,46 @@ int main(int argc, char **argv, char **envp)
                     execute_pipeline(cmds, envp, &ms);
                 else if (cmds)
                 {
-                    pid_t pid = fork();
-                    if (pid == 0)
+                    // Si el comando es "exit", salimos inmediatamente
+                    if (cmds->str && cmds->str[0] && strcmp(cmds->str[0], "exit") == 0)
+                    {
+                        free_simple_cmds(cmds);
+                        free(line);
+                        printf("exit\n");
+                        exit(0);
+                    }
+                    // Si es un builtin, ejecútalo en el padre
+                    if (is_builtin(cmds->str[0]))
                     {
                         apply_redirections(cmds, &ms);
-                        handle_builds(cmds->str, &ms);
+                        ms.exit_status = handle_builds(cmds->str, &ms);
+                        // No hagas exit aquí, sigue el bucle
                     }
-                    else if (pid > 0)
+                    else
                     {
-                        int status;
-                        waitpid(pid, &status, 0);
-                        // Actualiza exit_status si quieres
+                        pid_t pid = fork();
+                        if (pid == 0)
+                        {
+                            apply_redirections(cmds, &ms);
+                            execvp(cmds->str[0], cmds->str); // o tu función de ejecución externa
+                            perror("execvp");
+                            exit(127);
+                        }
+                        else if (pid > 0)
+                        {
+                            int status;
+                            waitpid(pid, &status, 0);
+                            if (WIFEXITED(status))
+                                ms.exit_status = WEXITSTATUS(status);
+                            else if (WIFSIGNALED(status))
+                                ms.exit_status = 128 + WTERMSIG(status);
+                        }
                     }
-                }
-                t_simple_cmds *tmp = cmds;
-                int n = 1;
-                while (tmp)
-                {
-                    printf("CMD %d:\n", n++);
-                    for (int i = 0; tmp->str && tmp->str[i]; i++)
-                        printf("  ARG[%d]: %s\n", i, tmp->str[i]);
-                    for (t_token *r = tmp->redirections; r; r = r->next)
-                        printf("  REDIR: type=%d, value=%s\n", r->type, r->value);
-                    tmp = tmp->next;
                 }
                 free_simple_cmds(cmds);
-                printf("Comandos liberados\n");
             }
         }
+		free(line);
     }
     return 0;
 }

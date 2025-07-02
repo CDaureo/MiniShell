@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:34:13 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/25 17:46:49 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:00:54 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	run_command_in_pipeline(
         close(previous_fd);
     }
     // Aplica redirecciones del comando
-    apply_redirections(cmd);
+    apply_redirections(cmd, ms);
 
     // Ejecuta builtins en el hijo si están en una tubería
     if (cmd->str && handle_builds(cmd->str, ms))

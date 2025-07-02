@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/02 16:56:05 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:21:15 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	setup_signals(void);
 /*                          BUILTIN FUNCTIONS                                */
 /* ************************************************************************** */
 int		handle_builds(char **argv, t_ms *ms);
+int		is_builtin(const char *cmd);
 int		ft_cd(char **args, t_ms *ms);
 int		ft_pwd(t_ms *ms);
 int		ft_env(t_ms *ms);
