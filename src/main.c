@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/01 18:35:24 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:58:15 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,8 @@ int main(int argc, char **argv, char **envp)
                     pid_t pid = fork();
                     if (pid == 0)
                     {
-                        apply_redirections(cmds);
+                        apply_redirections(cmds, &ms);
                         handle_builds(cmds->str, &ms);
-                        exit(0); // Termina el hijo tras ejecutar el comando
                     }
                     else if (pid > 0)
                     {
