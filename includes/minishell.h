@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/01 18:21:57 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:56:05 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,7 @@ void	pipex(t_ms *ms);
 void	execute_pipeline(t_simple_cmds *cmds, char **envp, t_ms *ms);
 char	*get_cmd_path(char *cmd, char **envp);
 void	free_pathstr(char **arr);
-void	apply_redirections(t_simple_cmds *redirection);
-
+void apply_redirections(t_simple_cmds *cmd, t_ms *ms);
 /* ************************************************************************** */
 /*                         LIBFT-STYLE FUNCTIONS                             */
 /* ************************************************************************** */
