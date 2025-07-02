@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:59 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:24:37 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ int main(int argc, char **argv, char **envp)
                     {
                         apply_redirections(cmds, &ms);
                         ms.exit_status = handle_builds(cmds->str, &ms);
-                        // No hagas exit aquí, sigue el bucle
                     }
                     else
                     {
@@ -129,7 +128,7 @@ int main(int argc, char **argv, char **envp)
                         if (pid == 0)
                         {
                             apply_redirections(cmds, &ms);
-                            execvp(cmds->str[0], cmds->str); // o tu función de ejecución externa
+                            execvp(cmds->str[0], cmds->str);
                             perror("execvp");
                             exit(127);
                         }

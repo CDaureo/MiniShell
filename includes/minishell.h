@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/02 17:21:15 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/07/02 17:25:07 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -161,7 +162,8 @@ void	pipex(t_ms *ms);
 void	execute_pipeline(t_simple_cmds *cmds, char **envp, t_ms *ms);
 char	*get_cmd_path(char *cmd, char **envp);
 void	free_pathstr(char **arr);
-void apply_redirections(t_simple_cmds *cmd, t_ms *ms);
+void	apply_redirections(t_simple_cmds *cmd, t_ms *ms);
+
 /* ************************************************************************** */
 /*                         LIBFT-STYLE FUNCTIONS                             */
 /* ************************************************************************** */
