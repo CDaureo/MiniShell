@@ -26,7 +26,9 @@ SRC = $(SRC_FILES)/main.c \
 	  $(SRC_BUILDS)/pwd.c \
 	  $(SRC_BUILDS)/cd.c \
 	  $(SRC_BUILDS)/handle_builds.c \
-	  $(SRC_BUILDS)/unset.c
+	  $(SRC_BUILDS)/unset.c \
+	  $(SRC_BUILDS)/isbuilds.c
+
 
 
 OBJ = $(SRC:.c=.o)

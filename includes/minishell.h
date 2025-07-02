@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 14:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/02 17:07:22 by simgarci         ###   ########.fr       */
+/*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/07/02 17:25:07 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -113,6 +114,7 @@ void	setup_signals(void);
 /*                          BUILTIN FUNCTIONS                                */
 /* ************************************************************************** */
 int		handle_builds(char **argv, t_ms *ms);
+int		is_builtin(const char *cmd);
 int		ft_cd(char **args, t_ms *ms);
 int		ft_pwd(t_ms *ms);
 int		ft_env(t_ms *ms);
