@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/02 17:25:07 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:34:16 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "libft.h"
+#include <fcntl.h>
 
 /* ************************************************************************** */
 /*                                 DEFINES                                   */
@@ -159,7 +160,7 @@ char	**tokens_to_str(t_token *tokens);
 /*                            PIPELINE FUNCTIONS                             */
 /* ************************************************************************** */
 void	pipex(t_ms *ms);
-void	execute_pipeline(t_simple_cmds *cmds, char **envp, t_ms *ms);
+void	execute_pipeline(t_simple_cmds *cmds, t_ms *ms);
 char	*get_cmd_path(char *cmd, char **envp);
 void	free_pathstr(char **arr);
 void	apply_redirections(t_simple_cmds *cmd, t_ms *ms);

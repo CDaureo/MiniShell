@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/02 17:29:40 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:11:50 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int main(int argc, char **argv, char **envp)
                 parse_simple_cmds(&tokens, &cmds, &ms);
 
                 if (cmds && cmds->next)
-                    execute_pipeline(cmds, envp, &ms);
+                    execute_pipeline(cmds, &ms);
                 else if (cmds)
                 {
                     // Si el comando es "exit", salimos inmediatamente

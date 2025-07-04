@@ -1,83 +1,78 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_paths.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 13:18:40 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/03 13:32:50 by cdaureo-         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   get_paths.c										:+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: cdaureo- <cdaureo-@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2025/06/03 13:18:40 by cdaureo-		  #+#	#+#			 */
+/*   Updated: 2025/07/04 17:34:10 by cdaureo-		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *get_cmd_path(char *cmd, char **envp)
+static int	find_path_index(char **envp)
 {
-	int i = 0;
-	int j = 0;
-	char **paths;
-	char *full_path;
-	char *tmp;
+	int	i;
 
-	    if (ft_strchr(cmd, '/'))
-    {
-        if (access(cmd, X_OK) == 0)
-            return ft_strdup(cmd);
-        else
-            return NULL;
-    }
-	
-	// Buscar PATH en envp
+	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+	{
 		i++;
+	}
 	if (!envp[i])
-		return NULL;
+		return (-1);
+	return (i);
+}
 
-	// Separar PATH en rutas
-	paths = ft_split(envp[i] + 5, ':');
-	if (!paths)
-		return NULL;
+static char	**get_paths_array(char **envp)
+{
+	int		index;
+	char	**paths;
 
+	index = find_path_index(envp);
+	if (index == -1)
+		return (NULL);
+	paths = ft_split(envp[index] + 5, ':');
+	return (paths);
+}
+
+static char	*try_paths(char **paths, char *cmd)
+{
+	int		j;
+	char	*tmp;
+	char	*full_path;
+
+	j = 0;
 	while (paths[j])
 	{
 		tmp = ft_strjoin(paths[j], "/");
 		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
-		{
-			ft_free_split(paths); // Libera el array de strings
-			return full_path;
-		}
+			return (full_path);
 		free(full_path);
 		j++;
 	}
-	ft_free_split(paths);
-	return NULL;
+	return (NULL);
 }
 
-/*
-int main(int argc, char **argv, char **envp)
+char	*get_cmd_path(char *cmd, char **envp)
 {
-	char *cmd_path;
-	char *cmd;
+	char	**paths;
+	char	*full_path;
 
-	if (argc != 2)
+	if (ft_strchr(cmd, '/'))
 	{
-		printf("Uso: %s <comando>\n", argv[0]);
-		return (1);
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL);
 	}
-	cmd = argv[1];
-	cmd_path = get_cmd_path(cmd, envp);
-	if (cmd_path)
-	{
-		printf("Ruta encontrada: %s\n", cmd_path);
-		free(cmd_path);
-	}
-	else
-	{
-		printf("Comando '%s' no encontrado en PATH\n", cmd);
-	}
-	return (0);
+	paths = get_paths_array(envp);
+	if (!paths)
+		return (NULL);
+	full_path = try_paths(paths, cmd);
+	ft_free_split(paths);
+	return (full_path);
 }
-*/
