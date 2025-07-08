@@ -30,6 +30,7 @@ static int	open_outfile_trunc(char *filename, t_ms *ms)
 		close(fd);
 		return (-1);
 	}
+	printf("hola");
 	close(fd);
 	return (0);
 }
@@ -39,6 +40,7 @@ static int	open_outfile_append(char *filename, t_ms *ms)
 	int	fd;
 
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+
 	if (fd < 0)
 	{
 		perror(filename);
@@ -80,29 +82,31 @@ static int	open_infile(char *filename, t_ms *ms)
 
 void	apply_redirections(t_simple_cmds *cmd, t_ms *ms)
 {
-	int	ret;
+    int		ret;
+    t_token	*redir;
 
-	while (cmd->redirections)
-	{
-		if (cmd->redirections->type == TOKEN_REDIRECT)
-		{
-			ret = open_outfile_trunc(cmd->redirections->value, ms);
-			if (ret < 0)
-				return ;
-		}
-		else if (cmd->redirections->type == TOKEN_APPEND)
-		{
-			ret = open_outfile_append(cmd->redirections->value, ms);
-			if (ret < 0)
-				return ;
-		}
-		else if (cmd->redirections->type == TOKEN_INPUT
-			|| cmd->redirections->type == TOKEN_HEREDOC)
-		{
-			ret = open_infile(cmd->redirections->value, ms);
-			if (ret < 0)
-				return ;
-		}
-		cmd->redirections = cmd->redirections->next;
-	}
+    redir = cmd->redirections;
+    while (redir)
+    {
+        if (redir->type == TOKEN_REDIRECT)
+        {
+            ret = open_outfile_trunc(redir->value, ms);
+            if (ret < 0)
+                return ;
+        }
+        else if (redir->type == TOKEN_APPEND)
+        {
+            ret = open_outfile_append(redir->value, ms);
+            if (ret < 0)
+                return ;
+        }
+        else if (redir->type == TOKEN_INPUT
+            || redir->type == TOKEN_HEREDOC)
+        {
+            ret = open_infile(redir->value, ms);
+            if (ret < 0)
+                return ;
+        }
+        redir = redir->next;
+    }
 }

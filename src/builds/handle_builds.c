@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:41:47 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/01 17:57:50 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:49:44 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	handle_builds(char **argv, t_ms *ms)
         if (pid == 0)
         {
             execvp(argv[0], argv);
-            // Si execvp falla:
             fprintf(stderr, "%s: command not found\n", argv[0]);
             exit(127);
         }

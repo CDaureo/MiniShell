@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:36:53 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/13 16:48:53 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:46:42 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,22 @@
 
 int ft_echo(char **argv)
 {
-	int i;
-	int line;
+    int i = 1;
+    int line = 1;
 
-	i = 1;
-	line = 1;
-	while (argv[i] && ft_strcmp(argv[i], "-n") == 0)
-	{
-		line = 0; // Si hay -n, no se imprime el salto de línea
-		i++;
-	}
-	    // Imprimir los argumentos
+    while (argv[i] && ft_strcmp(argv[i], "-n") == 0)
+    {
+        line = 0;
+        i++;
+    }
     while (argv[i])
     {
         printf("%s", argv[i]);
-        if (argv[i + 1]) // Si hay más argumentos, imprimir un espacio
+        if (argv[i + 1])
             printf(" ");
         i++;
     }
-	if (line)
+    if (line)
         printf("\n");
-	return (0);
+    return (0);
 }

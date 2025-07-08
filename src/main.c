@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:39:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/04 17:11:50 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/07/08 22:00:30 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int main(int argc, char **argv, char **envp)
         size_t prompt_len = ft_strlen(user) + 1 + ft_strlen(hostname) + 1 + ft_strlen(display_cwd) + 3;
         prompt = malloc(prompt_len);
         if (!prompt)
-            prompt = strdup("$ ");
+            prompt = ft_strdup("$ ");
         else
             snprintf(prompt, prompt_len, "%s@%s:%s$ ", user, hostname, display_cwd);
 
@@ -110,7 +110,7 @@ int main(int argc, char **argv, char **envp)
                 else if (cmds)
                 {
                     // Si el comando es "exit", salimos inmediatamente
-                    if (cmds->str && cmds->str[0] && strcmp(cmds->str[0], "exit") == 0)
+                    if (cmds->str && cmds->str[0] && ft_strcmp(cmds->str[0], "exit") == 0)
                     {
                         free_simple_cmds(cmds);
                         free(line);
@@ -119,8 +119,8 @@ int main(int argc, char **argv, char **envp)
                     }
                     // Si es un builtin, ejecútalo en el padre
                     if (is_builtin(cmds->str[0]))
-                    {
-                        apply_redirections(cmds, &ms);
+                    {           
+						apply_redirections(cmds, &ms);	
                         ms.exit_status = handle_builds(cmds->str, &ms);
                     }
                     else
@@ -137,10 +137,6 @@ int main(int argc, char **argv, char **envp)
                         {
                             int status;
                             waitpid(pid, &status, 0);
-                            if (WIFEXITED(status))
-                                ms.exit_status = WEXITSTATUS(status);
-                            else if (WIFSIGNALED(status))
-                                ms.exit_status = 128 + WTERMSIG(status);
                         }
                     }
                 }
