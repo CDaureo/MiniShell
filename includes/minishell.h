@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 18:10:14 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 18:50:45 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <stdio.h>
+# include <pwd.h>
 # include <limits.h>
 # include <signal.h>
 # include <readline/readline.h>
@@ -28,7 +29,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "libft.h"
-#include <fcntl.h>
+# include <fcntl.h>
 
 /* ************************************************************************** */
 /*                                 DEFINES                                   */
@@ -112,6 +113,16 @@ typedef struct s_append_args
 	int increment;
 }	t_append_args;
 
+typedef struct s_prompt_data
+{
+    char	cwd[4096];
+    char	hostname[256];
+    char	*prompt;
+    char	*user;
+    int		display_malloced;
+    char	*display_cwd;
+}	t_prompt_data;
+
 /* ************************************************************************** */
 /*                             SHELL CORE                                    */
 /* ************************************************************************** */
@@ -182,5 +193,19 @@ char	*ft_strdup(const char *s);
 size_t	ft_strlen(const char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strchr(const char *s, int c);
+
+/* ************************************************************************** */
+/*                         PROMPT FUNCTIONS                                   */
+/* ************************************************************************** */
+void	get_user_and_host_data(char **user, char *hostname);
+void	set_home_display(char *cwd, char *home, char **display_cwd, int *display_malloced);
+void	get_cwd_display(char *cwd, t_ms *ms, char **display_cwd, int *display_malloced);
+char	*build_prompt(char *user, char *hostname, char *display_cwd);
+
+/* ************************************************************************** */
+/*                         EXECUTION FUNCTIONS                               */
+/* ************************************************************************** */
+void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms);
+void	execute_cmds(t_simple_cmds *cmds, t_ms *ms, char *line);
 
 #endif
