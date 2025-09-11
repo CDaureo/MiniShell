@@ -5,108 +5,102 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 20:08:09 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/01 17:45:46 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/09/11 16:06:29 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/11 16:26:10 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int count_envp(char **envp)
+static void	update_existing_var(t_env *tmp, const char *value)
 {
-    int i = 0;
-    while (envp[i])
-        i++;
-    return (i);
+	free(tmp->value);
+	if (value != NULL)
+		tmp->value = ft_strdup(value);
+	else
+		tmp->value = NULL;
 }
 
-char *get_env_value(t_env *env, const char *key)
+static void	add_new_var(t_env *tmp, const char *key, const char *value)
 {
-    while (env)
-    {
-        if (ft_strcmp(env->key, key) == 0)
-            return env->value;
-        env = env->next;
-    }
-    return NULL;
+	t_env	*new;
+
+	new = malloc(sizeof(t_env));
+	if (!new)
+		return ;
+	new->key = ft_strdup(key);
+	if (value != NULL)
+		new->value = ft_strdup(value);
+	else
+		new->value = NULL;
+	new->next = NULL;
+	if (tmp)
+		tmp->next = new;
 }
 
-char **copy_envp(char **envp)
+void	update_env_var(t_env *env_list, const char *key, const char *value)
 {
-    int count = count_envp(envp);
-    char **copy = malloc(sizeof(char *) * (count + 1));
-    int i = 0;
-    if (!copy)
-        return NULL;
-    while (i < count)
-    {
-        copy[i] = ft_strdup(envp[i]);
-        if (!copy[i])
-        {
-            while (--i >= 0)
-                free(copy[i]);
-            free(copy);
-            return NULL;
-        }
-        i++;
-    }
-    copy[i] = NULL;
-    return copy;
+	t_env	*tmp;
+
+	tmp = env_list;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, key) == 0)
+		{
+			update_existing_var(tmp, value);
+			return ;
+		}
+		if (!tmp->next)
+			break ;
+		tmp = tmp->next;
+	}
+	add_new_var(tmp, key, value);
 }
 
-void update_env_var(t_env *env_list, const char *key, const char *value)
+static t_env	*create_env_node(const char *env_var)
 {
-    t_env *tmp = env_list;
-    while (tmp)
-    {
-        if (strcmp(tmp->key, key) == 0)
-        {
-            free(tmp->value);
-            tmp->value = value ? strdup(value) : NULL;
-            return;
-        }
-        if (!tmp->next)
-            break;
-        tmp = tmp->next;
-    }
-    // Si no existe, añadir al final
-    t_env *new = malloc(sizeof(t_env));
-    new->key = strdup(key);
-    new->value = value ? strdup(value) : NULL;
-    new->next = NULL;
-    if (tmp)
-        tmp->next = new;
+	t_env	*new;
+	char	*eq;
+
+	new = malloc(sizeof(t_env));
+	if (!new)
+		return (NULL);
+	eq = ft_strchr(env_var, '=');
+	if (eq)
+	{
+		new->key = ft_strndup(env_var, eq - env_var);
+		new->value = ft_strdup(eq + 1);
+	}
+	else
+	{
+		new->key = ft_strdup(env_var);
+		new->value = NULL;
+	}
+	new->next = NULL;
+	return (new);
 }
 
-t_env *init_env_list(char **envp)
+t_env	*init_env_list(char **envp)
 {
-    t_env *head = NULL;
-    t_env *current = NULL;
-    int i = 0;
+	t_env	*head;
+	t_env	*current;
+	t_env	*new;
+	int		i;
 
-    while (envp[i])
-    {
-        t_env *new = malloc(sizeof(t_env));
-        if (!new)
-            break;
-        char *eq = ft_strchr(envp[i], '=');
-        if (eq)
-        {
-            new->key = ft_strndup(envp[i], eq - envp[i]);
-            new->value = ft_strdup(eq + 1);
-        }
-        else
-        {
-            new->key = ft_strdup(envp[i]);
-            new->value = NULL;
-        }
-        new->next = NULL;
-        if (!head)
-            head = new;
-        else
-            current->next = new;
-        current = new;
-        i++;
-    }
-    return head;
+	i = 0;
+	current = NULL;
+	head = NULL;
+	while (envp[i])
+	{
+		new = create_env_node(envp[i]);
+		if (!new)
+			break ;
+		if (!head)
+			head = new;
+		else
+			current->next = new;
+		current = new;
+		i++;
+	}
+	return (head);
 }

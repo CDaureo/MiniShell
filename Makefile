@@ -11,6 +11,7 @@ SRC_BUILDS = $(SRC_FILES)/builds
 SRC = $(SRC_FILES)/main.c \
 	  $(SRC_UTILS)/free_simple_cmds.c \
 	  $(SRC_UTILS)/signals.c \
+	  $(SRC_UTILS)/envp_utils.c \
       $(SRC_ERRORS)/errors.c \
       $(SRC_PARSING)/parse.c \
       $(SRC_PARSING)/handlers.c \

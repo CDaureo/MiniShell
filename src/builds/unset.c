@@ -5,40 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 17:55:25 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/01 17:55:33 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/09/11 16:56:05 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/11 16:56:11 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_unset(char **argv, t_ms *ms)
+static void	unset_var(t_env **env_list, char *key)
 {
-    int i = 1;
-    if (!argv[1])
-        return (0);
-    while (argv[i])
-    {
-        t_env *prev = NULL;
-        t_env *curr = ms->env_list;
-        while (curr)
-        {
-            if (ft_strcmp(curr->key, argv[i]) == 0)
-            {
-                if (prev)
-                    prev->next = curr->next;
-                else
-                    ms->env_list = curr->next;
-                free(curr->key);
-                free(curr->value);
-                free(curr);
-                break;
-            }
-            prev = curr;
-            curr = curr->next;
-        }
-        i++;
-    }
-    return (0);
+	t_env	*prev;
+	t_env	*curr;
+
+	prev = NULL;
+	curr = *env_list;
+	while (curr)
+	{
+		if (ft_strcmp(curr->key, key) == 0)
+		{
+			if (prev)
+				prev->next = curr->next;
+			else
+				*env_list = curr->next;
+			free(curr->key);
+			free(curr->value);
+			free(curr);
+			break ;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
 }
 
+int	ft_unset(char **argv, t_ms *ms)
+{
+	int	i;
+
+	i = 1;
+	if (!argv[1])
+		return (0);
+	while (argv[i])
+	{
+		unset_var(&ms->env_list, argv[i]);
+		i++;
+	}
+	return (0);
+}

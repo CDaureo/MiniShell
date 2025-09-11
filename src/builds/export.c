@@ -5,50 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/13 18:05:53 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/01 17:43:35 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/09/11 16:31:08 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/11 16:36:54 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_export(char **argv, t_ms *ms)
+static void	print_env_list(t_env *env_list)
 {
-	int i;
+	while (env_list)
+	{
+		if (env_list->key)
+		{
+			if (env_list->value)
+				printf("declare -x %s=\"%s\"\n", env_list->key,
+					env_list->value);
+			else
+				printf("declare -x %s\n", env_list->key);
+		}
+		env_list = env_list->next;
+	}
+}
 
-	i = 1;
+static void	process_export_arg(char *arg, t_ms *ms)
+{
+	char	*eq;
+	char	*key;
+	char	*value;
+
+	eq = ft_strchr(arg, '=');
+	if (eq)
+	{
+		key = ft_strndup(arg, eq - arg);
+		value = ft_strdup(eq + 1);
+		update_env_var(ms->env_list, key, value);
+		free(key);
+		free(value);
+	}
+	else
+		update_env_var(ms->env_list, arg, NULL);
+}
+
+int	ft_export(char **argv, t_ms *ms)
+{
+	int	i;
+
 	if (!argv[1])
 	{
-   		t_env *env_list = ms->env_list;
-        while (env_list)
-        {
-            if (env_list->key)
-            {
-                if (env_list->value)
-                    printf("declare -x %s=\"%s\"\n", env_list->key, env_list->value);
-                else
-                    printf("declare -x %s\n", env_list->key);
-            }
-            env_list = env_list->next;
-        }
+		print_env_list(ms->env_list);
 		return (0);
 	}
-	 while (argv[i])
-    {
-        char *eq = ft_strchr(argv[i], '=');
-        if (eq) // Si el argumento tiene un "=" (ejemplo: VAR=value)
-        {
-            char *key = ft_strndup(argv[i], eq - argv[i]);
-            char *value = ft_strdup(eq + 1);
-            update_env_var(ms->env_list, key, value); // Actualizar o añadir la variable
-            free(key);
-            free(value);
-        }
-        else // Si el argumento no tiene "=" (ejemplo: VAR)
-        {
-            update_env_var(ms->env_list, argv[i], NULL); // Añadir la variable sin valor
-        }
-        i++;
-    }
+	i = 1;
+	while (argv[i])
+	{
+		process_export_arg(argv[i], ms);
+		i++;
+	}
 	return (0);
 }

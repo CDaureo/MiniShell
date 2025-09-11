@@ -1,14 +1,15 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   redirections.c									 :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: cdaureo- <cdaureo-@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2025/06/12 16:20:04 by cdaureo-		  #+#	#+#			 */
-/*   Updated: 2025/07/04 17:28:26 by cdaureo-		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 16:05:18 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/11 16:05:19 by cdaureo-         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -82,31 +83,31 @@ static int	open_infile(char *filename, t_ms *ms)
 
 void	apply_redirections(t_simple_cmds *cmd, t_ms *ms)
 {
-    int		ret;
-    t_token	*redir;
+	int		ret;
+	t_token	*redir;
 
-    redir = cmd->redirections;
-    while (redir)
-    {
-        if (redir->type == TOKEN_REDIRECT)
-        {
-            ret = open_outfile_trunc(redir->value, ms);
-            if (ret < 0)
-                return ;
-        }
-        else if (redir->type == TOKEN_APPEND)
-        {
-            ret = open_outfile_append(redir->value, ms);
-            if (ret < 0)
-                return ;
-        }
-        else if (redir->type == TOKEN_INPUT
-            || redir->type == TOKEN_HEREDOC)
-        {
-            ret = open_infile(redir->value, ms);
-            if (ret < 0)
-                return ;
-        }
-        redir = redir->next;
-    }
+	redir = cmd->redirections;
+	while (redir)
+	{
+		if (redir->type == TOKEN_REDIRECT)
+		{
+			ret = open_outfile_trunc(redir->value, ms);
+			if (ret < 0)
+				return ;
+		}
+		else if (redir->type == TOKEN_APPEND)
+		{
+			ret = open_outfile_append(redir->value, ms);
+			if (ret < 0)
+				return ;
+		}
+		else if (redir->type == TOKEN_INPUT
+			|| redir->type == TOKEN_HEREDOC)
+		{
+			ret = open_infile(redir->value, ms);
+			if (ret < 0)
+				return ;
+		}
+		redir = redir->next;
+	}
 }
