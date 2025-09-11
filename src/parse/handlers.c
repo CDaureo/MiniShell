@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 12:06:39 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/25 18:55:17 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/09/11 18:04:20 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/11 18:10:29 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void handle_append(t_token **tokens, int type, const char *value, int *i, int increment)
+void	handle_append(t_append_args *args)
 {
-	append_token(tokens, create_token(type, value));
-	*i += increment;
+	append_token(args->tokens, create_token(args->type, args->value));
+	*(args->i) += args->increment;
 }
 
 void	handle_pipes(int *i, t_token **tokens)
@@ -24,53 +24,42 @@ void	handle_pipes(int *i, t_token **tokens)
 	(*i)++;
 }
 
-void	handle_redirections(const char *input, int *i, t_token **tokens)
+static void	handle_redir_type(t_append_args *args, int type, const char *value,
+	int increment)
 {
-    if (input[*i] == '>')
-    {
-        if (input[*i + 1] == '>')
-		{
-		printf("%c\n", input[*i]);          
-	  	handle_append(tokens, TOKEN_APPEND, ">>", i, 2);
-		}
-        else
-            handle_append(tokens, TOKEN_REDIRECT, ">", i, 1);
-    }
-    else if (input[*i] == '<')
-    {
-        if (input[*i + 1] == '<')              
-            handle_append(tokens, TOKEN_HEREDOC, "<<", i, 2);
-        else
-            handle_append(tokens, TOKEN_INPUT, "<", i, 1);
-    }
+	args->type = type;
+	args->value = value;
+	args->increment = increment;
+	handle_append(args);
 }
 
-static char	*handle_quotes(const char *input, int *i)
+void	handle_redirections(const char *input, int *i, t_token **tokens)
 {
-	int		start;
-	char	quote;
-	char	*word;
-	
-	quote = input[*i];
-	(*i)++;
-	start = *i;
-	while (input[*i] && input[*i] != quote)
-		(*i)++;
-	if (input[*i] != quote)
+	t_append_args	args;
+
+	args.tokens = tokens;
+	args.i = i;
+	if (input[*i] == '>')
 	{
-		fprintf(stderr, "Error: Unmatched %c quote\n", quote); //cambiar por version ft
-		return (NULL);
+		if (input[*i + 1] == '>')
+			handle_redir_type(&args, TOKEN_APPEND, ">>", 2);
+		else
+			handle_redir_type(&args, TOKEN_REDIRECT, ">", 1);
 	}
-	word = ft_strndup(&input[start], *i - start);
-	(*i)++;
-	return (word);
+	else if (input[*i] == '<')
+	{
+		if (input[*i + 1] == '<')
+			handle_redir_type(&args, TOKEN_HEREDOC, "<<", 2);
+		else
+			handle_redir_type(&args, TOKEN_INPUT, "<", 1);
+	}
 }
 
 void	handle_words(const char *input, int *i, t_token **tokens)
 {
 	int		start;
 	char	*word;
-	
+
 	start = *i;
 	if (input[*i] == '\'' || input[*i] == '"')
 		word = handle_quotes(input, i);

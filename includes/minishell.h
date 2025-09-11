@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/08 21:56:20 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 18:10:14 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,15 @@ typedef struct s_simple_cmds
 	struct s_simple_cmds	*next;
 }	t_simple_cmds;
 
+typedef struct s_append_args
+{
+	t_token **tokens;
+	int type;
+	const char *value;
+	int *i;
+	int increment;
+}	t_append_args;
+
 /* ************************************************************************** */
 /*                             SHELL CORE                                    */
 /* ************************************************************************** */
@@ -142,11 +151,12 @@ t_token	*lexer(const char *input);
 /* ************************************************************************** */
 /*                          TOKEN HANDLER FUNCTIONS                          */
 /* ************************************************************************** */
-void	handle_append(t_token **tokens, int type, \
-			const char *value, int *i, int increment);
+void	handle_append(t_append_args *args);
 void	handle_pipes(int *i, t_token **tokens);
 void	handle_redirections(const char *input, int *i, t_token **tokens);
 void	handle_words(const char *input, int *i, t_token **tokens);
+char	*handle_quotes(const char *input, int *i);
+
 
 /* ************************************************************************** */
 /*                            PARSER FUNCTIONS                               */
