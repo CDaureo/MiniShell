@@ -6,11 +6,12 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:38:58 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 12:18:20 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:05:32 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
+
 int	ft_atoi(const char *nptr)
 {
 	int	val;

@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:00:16 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 12:22:03 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:11:15 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUFFER_SIZE 1
 #endif
 #include "../../includes/libft.h"
+
 static	int	find_newline(char *buffer)
 {
 	int	i;

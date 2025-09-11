@@ -6,11 +6,12 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:57:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 12:22:03 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:08:36 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
+
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char	*str;

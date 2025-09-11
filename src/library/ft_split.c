@@ -6,11 +6,12 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:59:01 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 12:22:03 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:16:36 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
+
 int	ft_countwrds(char const *str, char delimiter)
 {
 	int	count;

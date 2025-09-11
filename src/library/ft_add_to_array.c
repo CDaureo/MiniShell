@@ -3,60 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_to_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 13:39:35 by simgarci          #+#    #+#             */
-/*   Updated: 2025/07/01 14:18:53 by simgarci         ###   ########.fr       */
+/*   Created: 2025/09/11 17:04:01 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/11 17:05:17 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 #include "../../includes/minishell.h"
 
-void ft_add_to_array(char ***array, const char *str, int last_exit_status)
+static int	get_array_len(char **array)
 {
-    int len;
-    char **new_array;
-    const char *to_add;
-	char *expanded;
-	const char *env_var_name;
-	char exit_status_str[12];
+	int	len;
 
 	len = 0;
-	to_add = str;
-    if (ft_strcmp(str, "$?") == 0)
-    {
-		printf("Adding exit status: %d\n", last_exit_status);
-        snprintf(exit_status_str, sizeof(exit_status_str), "%d", last_exit_status);
-        to_add = exit_status_str;
-    }
-    else if(str[0] == '$')
-    {
-        env_var_name = str + 1;
-        expanded = getenv(env_var_name);
-        if (expanded)
-            to_add = expanded;
-        else
-            to_add = "";
-    }
-    if (*array)
-    {
-        while ((*array)[len])
-            len++;
-    }
+	if (array)
+	{
+		while (array[len])
+			len++;
+	}
+	return (len);
+}
 
-    new_array = malloc(sizeof(char *) * (len + 2));
-    if (!new_array)
-        return;
+static const char	*expand_str(const char *str, int last_exit_status)
+{
+	static char	exit_status_str[12];
+	const char	*env_var_name;
+	char		*expanded;
 
-    for (int i = 0; i < len; i++)
-        new_array[i] = (*array)[i];
+	if (ft_strcmp(str, "$?") == 0)
+	{
+		snprintf(exit_status_str, sizeof(exit_status_str),
+			"%d", last_exit_status);
+		return (exit_status_str);
+	}
+	else if (str[0] == '$')
+	{
+		env_var_name = str + 1;
+		expanded = getenv(env_var_name);
+		if (expanded)
+			return (expanded);
+		else
+			return ("");
+	}
+	return (str);
+}
 
-    new_array[len] = ft_strdup(to_add);
-    new_array[len + 1] = NULL;
+void	ft_add_to_array(char ***array, const char *str, int last_exit_status)
+{
+	const char	*to_add;
+	int			len;
+	char		**new_array;
+	int			i;
 
-    if (*array)
-        free(*array);
-
-    *array = new_array;
+	len = get_array_len(*array);
+	to_add = expand_str(str, last_exit_status);
+	new_array = malloc(sizeof(char *) * (len + 2));
+	if (!new_array)
+		return ;
+	i = 0;
+	while (i < len)
+	{
+		new_array[i] = (*array)[i];
+		i++;
+	}
+	new_array[len] = ft_strdup(to_add);
+	new_array[len + 1] = NULL;
+	if (*array)
+		free(*array);
+	*array = new_array;
 }

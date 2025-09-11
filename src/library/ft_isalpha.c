@@ -6,12 +6,13 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:40:44 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 12:22:03 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:10:34 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../../includes/libft.h"
+
 int	ft_isalpha(int i)
 {
 	if ((i >= 'a' && i <= 'z') || (i >= 'A' && i <= 'Z'))

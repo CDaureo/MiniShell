@@ -6,11 +6,12 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:08:19 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 12:22:03 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:12:35 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
+
 int	ft_isalnum(int i)
 {
 	if (ft_isalpha(i) == 0 && ft_isdigit(i) == 0)

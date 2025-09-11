@@ -6,13 +6,13 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:43:32 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/06/04 16:33:03 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 16:57:24 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void error_msg(const char *msg)
+void	error_msg(const char *msg)
 {
 	perror(msg);
 	exit(E_FAILURE);

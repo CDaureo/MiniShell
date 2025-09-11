@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:32:37 by simgarci          #+#    #+#             */
-/*   Updated: 2025/06/03 12:22:40 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:08:56 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ int	ft_printf(char const *format, ...)
 	va_end(args);
 	return (count);
 }
-

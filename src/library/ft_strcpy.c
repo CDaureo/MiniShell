@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 17:01:54 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/01 17:02:16 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/09/11 17:06:22 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/11 17:06:53 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 char	*ft_strcpy(char *dst, const char *src)
 {
-    int	i;
+	int	i;
 
-    i = 0;
-    while (src[i])
-    {
-        dst[i] = src[i];
-        i++;
-    }
-    dst[i] = '\0';
-    return (dst);
+	i = 0;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
 }
