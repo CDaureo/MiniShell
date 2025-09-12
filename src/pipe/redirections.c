@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 16:05:18 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 18:13:45 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:31:18 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,20 @@ static int	handle_redir_token(t_token *redir, t_ms *ms)
 	return (0);
 }
 
-void	apply_redirections(t_simple_cmds *cmd, t_ms *ms)
+void	apply_redirections(t_simple_cmds *cmd, t_ms *ms, int *stdout_copy, int *stdin_copy)
 {
-	int		ret;
-	t_token	*redir;
+    int		ret;
+    t_token	*redir;
 
-	redir = cmd->redirections;
-	while (redir)
-	{
-		ret = handle_redir_token(redir, ms);
-		if (ret < 0)
-			return ;
-		redir = redir->next;
-	}
+    *stdout_copy = dup(STDOUT_FILENO);
+    *stdin_copy = dup(STDIN_FILENO);
+
+    redir = cmd->redirections;
+    while (redir)
+    {
+        ret = handle_redir_token(redir, ms);
+        if (ret < 0)
+            return ;
+        redir = redir->next;
+    }
 }

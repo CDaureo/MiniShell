@@ -182,7 +182,7 @@ void	pipex(t_ms *ms);
 void	execute_pipeline(t_simple_cmds *cmds, t_ms *ms);
 char	*get_cmd_path(char *cmd, char **envp);
 void	free_pathstr(char **arr);
-void	apply_redirections(t_simple_cmds *cmd, t_ms *ms);
+void	apply_redirections(t_simple_cmds *cmd, t_ms *ms, int *stdout_copy, int *stdin_copy);
 
 /* ************************************************************************** */
 /*						 LIBFT-STYLE FUNCTIONS							 */
@@ -206,7 +206,7 @@ char	*build_prompt(char *user, char *hostname,
 /* ************************************************************************** */
 /*						 EXECUTION FUNCTIONS							   */
 /* ************************************************************************** */
-void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms);
+void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms, int stdout_copy, int stdin_copy);
 void	execute_cmds(t_simple_cmds *cmds, t_ms *ms, char *line);
 
 #endif

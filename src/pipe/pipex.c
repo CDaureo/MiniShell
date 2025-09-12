@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:20:30 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/07/04 17:20:44 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:36:24 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,27 @@ static void	set_redirs(int prev_fd, int *fd)
 static void	child_proc(t_simple_cmds *cmd, int prev_fd, int *fd, t_ms *ms)
 {
 	char	*path;
+	int		stdout_copy;
+	int		stdin_copy;
 
 	set_redirs(prev_fd, fd);
-	apply_redirections(cmd, ms);
+	apply_redirections(cmd, ms, &stdout_copy, &stdin_copy);
 	if (cmd->str && handle_builds(cmd->str, ms))
-		(exit(0));
+	{
+		dup2(stdout_copy, STDOUT_FILENO);
+		dup2(stdin_copy, STDIN_FILENO);
+		close(stdout_copy);
+		close(stdin_copy);
+		exit(0);
+	}
 	if (!cmd->str || !cmd->str[0])
-		(exit(0));
+	{
+		dup2(stdout_copy, STDOUT_FILENO);
+		dup2(stdin_copy, STDIN_FILENO);
+		close(stdout_copy);
+		close(stdin_copy);
+		exit(0);
+	}
 	path = get_cmd_path(cmd->str[0], ms->envp);
 	if (path)
 	{
@@ -51,7 +65,11 @@ static void	child_proc(t_simple_cmds *cmd, int prev_fd, int *fd, t_ms *ms)
 		free(path);
 	}
 	error_msg(cmd->str[0]);
-	(exit(1));
+	dup2(stdout_copy, STDOUT_FILENO);
+	dup2(stdin_copy, STDIN_FILENO);
+	close(stdout_copy);
+	close(stdin_copy);
+	exit(1);
 }
 
 static void	fork_and_run(t_simple_cmds *cmd, int prev_fd, int *fd, t_ms *ms)
