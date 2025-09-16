@@ -170,11 +170,10 @@ char	*handle_quotes(const char *input, int *i);
 /* ************************************************************************** */
 /*							PARSER FUNCTIONS							   */
 /* ************************************************************************** */
-void	command_types(t_token **tokens, t_simple_cmds **cmds, \
-			t_simple_cmds **current_cmd, t_token **current_token, t_ms *ms);
 void	parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds, t_ms *ms);
 char	**tokens_to_str(t_token *tokens);
-
+void	command_tokens(t_simple_cmds **current_cmd, t_token **current_token);
+void	free_token_and_next(t_token *tok, int free_next);
 /* ************************************************************************** */
 /*							PIPELINE FUNCTIONS							 */
 /* ************************************************************************** */

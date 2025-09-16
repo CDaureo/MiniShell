@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 19:40:08 by simgarci          #+#    #+#             */
-/*   Updated: 2025/07/01 11:57:31 by simgarci         ###   ########.fr       */
+/*   Created: 2025/09/16 12:08:58 by simgarci          #+#    #+#             */
+/*   Updated: 2025/09/16 12:28:13 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,53 +24,53 @@ int	check_input(const char *input, int i)
 	return (1);
 }
 
-t_token *create_token(t_token_type type, const char *value)
+t_token	*create_token(t_token_type type, const char *value)
 {
-    t_token *token;
+	t_token	*token;
 
 	token = malloc(sizeof(t_token));
-	
-    if (!token)
-        return NULL;
-    token->type = type;
+	if (!token)
+		return (NULL);
+	token->type = type;
 	if (value)
 		token->value = ft_strdup(value);
-	else 
+	else
 		token->value = NULL;
-    token->next = NULL;
-    return token;
+	token->next = NULL;
+	return (token);
 }
 
-void append_token(t_token **head, t_token *new_token)
+void	append_token(t_token **head, t_token *new_token)
 {
-    t_token *current;
-	
-    if (!*head)
-    {
-        *head = new_token;
-        return;
-    }
+	t_token	*current;
+
+	if (!*head)
+	{
+		*head = new_token;
+		return ;
+	}
 	current = *head;
-    while (current->next)
-        current = current->next;
-    current->next = new_token;
+	while (current->next)
+		current = current->next;
+	current->next = new_token;
 }
 
-void free_tokens(t_token *tokens)
+void	free_tokens(t_token *tokens)
 {
-    t_token *tmp;
-    while (tokens)
-    {
-        tmp = tokens->next;
-        printf("Liberando token: %s\n", tokens->value);
-        free(tokens->value);
-        free(tokens);
-        tokens = tmp;
-    }
-    printf("Fin de free_tokens\n");
+	t_token	*tmp;
+
+	while (tokens)
+	{
+		tmp = tokens->next;
+		printf("Liberando token: %s\n", tokens->value);
+		free(tokens->value);
+		free(tokens);
+		tokens = tmp;
+	}
+	printf("Fin de free_tokens\n");
 }
 
-t_token *lexer(const char *input)
+t_token	*lexer(const char *input)
 {
 	t_token	*tokens;
 	int		i;
@@ -82,9 +82,9 @@ t_token *lexer(const char *input)
 		if (ft_strchr(" \t\n\v\f\r", input[i]))
 		{
 			i++;
-			continue;
+			continue ;
 		}
-		if(!check_input(input, i))
+		if (!check_input(input, i))
 			return (NULL);
 		if (input[i] == '|')
 			handle_pipes(&i, &tokens);

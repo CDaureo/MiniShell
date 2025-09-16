@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_to_array.c                                  :+:      :+:    :+:   */
+/*   ft_add_to_arr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -50,7 +50,7 @@ static const char	*expand_str(const char *str, int last_exit_status)
 	return (str);
 }
 
-void	ft_add_to_array(char ***array, const char *str, int last_exit_status)
+void	ft_add_to_arr(char ***array, const char *str, int last_exit_status)
 {
 	const char	*to_add;
 	int			len;

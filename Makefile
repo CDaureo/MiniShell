@@ -19,6 +19,7 @@ SRC = $(SRC_FILES)/main.c \
       $(SRC_PARSING)/parse.c \
       $(SRC_PARSING)/handlers.c \
       $(SRC_PARSING)/token_helpers.c \
+	  $(SRC_PARSING)/commands.c \
       $(SRC_PIPE)/pipex.c \
 	  $(SRC_PIPE)/free_paths.c \
 	  $(SRC_PIPE)/get_paths.c \

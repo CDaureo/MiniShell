@@ -5,7 +5,7 @@ CFLAGS  := -Wall -Werror -Wextra -fPIE
 LDFLAGS := -pie
 
 SRC     := 	ft_atoi.c \
-			ft_add_to_array.c \
+			ft_add_to_arr.c \
 			ft_bzero.c \
 			ft_calloc.c \
 			ft_isalnum.c \
