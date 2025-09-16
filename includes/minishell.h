@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/17 00:56:52 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/17 01:18:32 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,8 @@ char	*build_prompt(char *user, char *hostname,
 void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms,
 			int stdout_copy, int stdin_copy);
 void	execute_cmds(t_simple_cmds *cmds, t_ms *ms, char *line);
+void	free_exit(t_simple_cmds *cmds, char *line);
+void	closer(int stdout_copy, int stdin_copy);
 t_quote	handle_quotes(const char *input, int *i);
 
 #endif
