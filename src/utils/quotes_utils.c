@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 18:08:41 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/16 14:22:50 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/17 00:56:45 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_quote_result	handle_quotes(const char *input, int *i)
+t_quote	handle_quotes(const char *input, int *i)
 {
 	int		start;
 	char	quote;
-	t_quote_result	res;
+	t_quote	res;
 
 	quote = input[*i];
 	(*i)++;

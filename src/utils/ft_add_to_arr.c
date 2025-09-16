@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_to_arr.c                                  :+:      :+:    :+:   */
+/*   ft_add_to_arr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 17:04:01 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 17:05:17 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/09/17 00:59:16 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/17 00:59:17 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,28 @@ static const char	*expand_str(const char *str, int last_exit_status)
 
 void	ft_add_to_arr(char ***array, t_token *tok, int last_exit_status)
 {
-    const char	*to_add;
-    int			len;
-    char		**new_array;
-    int			i;
+	const char	*to_add;
+	int			len;
+	char		**new_array;
+	int			i;
 
-    len = get_array_len(*array);
-    if (tok->single_quoted)
-        to_add = tok->value;
-    else
-        to_add = expand_str(tok->value, last_exit_status);
-    new_array = malloc(sizeof(char *) * (len + 2));
-    if (!new_array)
-        return ;
-    i = 0;
-    while (i < len)
-    {
-        new_array[i] = (*array)[i];
-        i++;
-    }
-    new_array[len] = ft_strdup(to_add);
-    new_array[len + 1] = NULL;
-    if (*array)
-        free(*array);
-    *array = new_array;
+	len = get_array_len(*array);
+	if (tok->single_quoted)
+		to_add = tok->value;
+	else
+		to_add = expand_str(tok->value, last_exit_status);
+	new_array = malloc(sizeof(char *) * (len + 2));
+	if (!new_array)
+		return ;
+	i = 0;
+	while (i < len)
+	{
+		new_array[i] = (*array)[i];
+		i++;
+	}
+	new_array[len] = ft_strdup(to_add);
+	new_array[len + 1] = NULL;
+	if (*array)
+		free(*array);
+	*array = new_array;
 }

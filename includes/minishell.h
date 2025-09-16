@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   minishell.h										:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: cdaureo- <cdaureo-@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2025/07/02 17:25:06 by cdaureo-		  #+#	#+#			 */
-/*   Updated: 2025/09/11 18:50:45 by cdaureo-		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
+/*   Updated: 2025/09/17 00:56:52 by cdaureo-         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -79,9 +79,9 @@ typedef struct s_env
 
 typedef struct s_quote_result
 {
-    char	*word;
-    int		single_quoted;
-}	t_quote_result;
+	char	*word;
+	int		single_quoted;
+}	t_quote;
 
 typedef struct t_ms
 {
@@ -168,11 +168,11 @@ t_token	*lexer(const char *input);
 /* ************************************************************************** */
 /*						  TOKEN HANDLER FUNCTIONS						  */
 /* ************************************************************************** */
-void			handle_append(t_append_args *args);
-void			handle_pipes(int *i, t_token **tokens);
-void			handle_redirections(const char *input, int *i, t_token **tokens);
-void			handle_words(const char *input, int *i, t_token **tokens);
-t_quote_result	handle_quotes(const char *input, int *i);
+void	handle_append(t_append_args *args);
+void	handle_pipes(int *i, t_token **tokens);
+void	handle_redirections(const char *input, int *i,
+			t_token **tokens);
+void	handle_words(const char *input, int *i, t_token **tokens);
 
 /* ************************************************************************** */
 /*							PARSER FUNCTIONS							   */
@@ -189,7 +189,8 @@ void	pipex(t_ms *ms);
 void	execute_pipeline(t_simple_cmds *cmds, t_ms *ms);
 char	*get_cmd_path(char *cmd, char **envp);
 void	free_pathstr(char **arr);
-void	apply_redirections(t_simple_cmds *cmd, t_ms *ms, int *stdout_copy, int *stdin_copy);
+void	apply_redirections(t_simple_cmds *cmd, t_ms *ms,
+			int *stdout_copy, int *stdin_copy);
 
 /* ************************************************************************** */
 /*						 LIBFT-STYLE FUNCTIONS							 */
@@ -213,7 +214,9 @@ char	*build_prompt(char *user, char *hostname,
 /* ************************************************************************** */
 /*						 EXECUTION FUNCTIONS							   */
 /* ************************************************************************** */
-void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms, int stdout_copy, int stdin_copy);
+void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms,
+			int stdout_copy, int stdin_copy);
 void	execute_cmds(t_simple_cmds *cmds, t_ms *ms, char *line);
+t_quote	handle_quotes(const char *input, int *i);
 
 #endif
