@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:08:58 by simgarci          #+#    #+#             */
-/*   Updated: 2025/09/16 12:28:13 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:42:00 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_token	*create_token(t_token_type type, const char *value)
 		token->value = ft_strdup(value);
 	else
 		token->value = NULL;
+	token->single_quoted = 0;
 	token->next = NULL;
 	return (token);
 }

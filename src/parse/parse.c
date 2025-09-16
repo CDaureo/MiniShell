@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:08:43 by simgarci          #+#    #+#             */
-/*   Updated: 2025/09/16 13:19:28 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:26:57 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	command_types(t_simple_cmds **cmds, \
 		command_tokens(crnt_cmd, crnt_token);
 	else
 	{
-		ft_add_to_arr(&(*crnt_cmd)->str, (*crnt_token)->value, ms->exit_status);
+		ft_add_to_arr(&(*crnt_cmd)->str, *crnt_token, ms->exit_status);
 		tmp = *crnt_token;
 		*crnt_token = (*crnt_token)->next;
 		free_token_and_next(tmp, 0);

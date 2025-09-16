@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 18:04:20 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/12 16:27:02 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:37:31 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,31 @@ void	handle_redirections(const char *input, int *i, t_token **tokens)
 	}
 }
 
-void	handle_words(const char *input, int *i, t_token **tokens)
+void handle_words(const char *input, int *i, t_token **tokens)
 {
-	int		start;
-	char	*word;
+    int				start;
+    char			*word;
+    t_quote_result	qr;
+    int				single_quoted;
+	t_token			*tok;
 
-	start = *i;
-	if (input[*i] == '\'' || input[*i] == '"')
-		word = handle_quotes(input, i);
-	else
-	{
-		while (input[*i] && !(ft_strchr(" \t\n\v\f\r", input[*i])) \
-			&& input[*i] != '|' && input[*i] != '>' && input[*i] != '<')
-			(*i)++;
-		word = ft_strndup(&input[start], *i - start);
-	}
-	append_token(tokens, create_token(TOKEN_WORD, word));
-	free(word);
+	single_quoted = 0;
+    start = *i;
+    if (input[*i] == '\'' || input[*i] == '"')
+    {
+        qr = handle_quotes(input, i);
+        word = qr.word;
+        single_quoted = qr.single_quoted;
+    }
+    else
+    {
+        while (input[*i] && !(ft_strchr(" \t\n\v\f\r", input[*i])) \
+            && input[*i] != '|' && input[*i] != '>' && input[*i] != '<')
+            (*i)++;
+        word = ft_strndup(&input[start], *i - start);
+    }
+    tok = create_token(TOKEN_WORD, word);
+    tok->single_quoted = single_quoted;
+    append_token(tokens, tok);
+    free(word);
 }
