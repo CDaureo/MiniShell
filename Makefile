@@ -16,6 +16,7 @@ SRC = $(SRC_FILES)/main.c \
 	  $(SRC_UTILS)/quotes_utils.c \
 	  $(SRC_UTILS)/cmd_utils.c \
 	  $(SRC_UTILS)/ft_add_to_arr.c \
+	  $(SRC_UTILS)/checker_utils.c \
       $(SRC_ERRORS)/errors.c \
       $(SRC_PARSING)/parse.c \
       $(SRC_PARSING)/handlers.c \
@@ -34,7 +35,6 @@ SRC = $(SRC_FILES)/main.c \
 	  $(SRC_BUILDS)/handle_builds.c \
 	  $(SRC_BUILDS)/unset.c \
 	  $(SRC_BUILDS)/isbuilds.c
-
 
 
 OBJ = $(SRC:.c=.o)

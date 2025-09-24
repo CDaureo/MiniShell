@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/17 01:18:32 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/22 16:35:47 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -40,6 +42,8 @@
 /* ************************************************************************** */
 /*								ENUMS									  */
 /* ************************************************************************** */
+
+
 typedef enum e_token_type
 {
 	TOKEN_WORD,
@@ -173,6 +177,10 @@ void	handle_pipes(int *i, t_token **tokens);
 void	handle_redirections(const char *input, int *i,
 			t_token **tokens);
 void	handle_words(const char *input, int *i, t_token **tokens);
+t_quote	handle_quotes(const char *input, int *i);
+int		handle_single_quote(char *dst, const char *src, int *i);
+int		handle_double_quote(char *dst, const char *src, int *i, \
+	int last_exit_status);
 
 /* ************************************************************************** */
 /*							PARSER FUNCTIONS							   */
@@ -181,7 +189,11 @@ void	parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds, t_ms *ms);
 char	**tokens_to_str(t_token *tokens);
 void	command_tokens(t_simple_cmds **current_cmd, t_token **current_token);
 void	free_token_and_next(t_token *tok, int free_next);
-void	ft_add_to_arr(char ***array, t_token *tok, int last_exit_status);
+int		copy_var_value(char *dst, const char *src, int *i, \
+	int last_exit_status);
+int		append_quoted(char *dst, const char *src, int *i);
+int		get_array_len(char **array);
+
 /* ************************************************************************** */
 /*							PIPELINE FUNCTIONS							 */
 /* ************************************************************************** */
@@ -199,6 +211,10 @@ char	*ft_strdup(const char *s);
 size_t	ft_strlen(const char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strchr(const char *s, int c);
+int		ft_is_var_char(char c);
+void	ft_add_to_arr(char ***array, t_token *tok, int last_exit_status);
+int		ft_is_word_delim(char c);
+int		ft_is_var_start(char c);
 
 /* ************************************************************************** */
 /*						 PROMPT FUNCTIONS								   */
@@ -219,6 +235,5 @@ void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms,
 void	execute_cmds(t_simple_cmds *cmds, t_ms *ms, char *line);
 void	free_exit(t_simple_cmds *cmds, char *line);
 void	closer(int stdout_copy, int stdin_copy);
-t_quote	handle_quotes(const char *input, int *i);
 
 #endif

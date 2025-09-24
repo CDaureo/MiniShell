@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 18:08:41 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/17 00:56:45 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/09/22 15:58:09 by simgarci          #+#    #+#             */
+/*   Updated: 2025/09/22 16:35:17 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,43 @@ t_quote	handle_quotes(const char *input, int *i)
 	start = *i;
 	while (input[*i] && input[*i] != quote)
 		(*i)++;
-	res.word = ft_strndup(&input[start], *i - start);
+	res.word = ft_strndup(&input[start - 1], (*i - start) + 2);
 	res.single_quoted = (quote == '\'');
 	if (input[*i] == quote)
 		(*i)++;
 	else
 		fprintf(stderr, "Error: Unmatched %c quote\n", quote);
 	return (res);
+}
+
+int	handle_single_quote(char *dst, const char *src, int *i)
+{
+	int	k;
+
+	k = 0;
+	(*i)++;
+	while (src[*i] && src[*i] != '\'')
+		dst[k++] = src[(*i)++];
+	if (src[*i] == '\'')
+		(*i)++;
+	return (k);
+}
+
+int	handle_double_quote(char *dst, const char *src, int *i, \
+	int last_exit_status)
+{
+	int	k;
+
+	k = 0;
+	(*i)++;
+	while (src[*i] && src[*i] != '"')
+	{
+		if (src[*i] == '$')
+			k += copy_var_value(dst + k, src, i, last_exit_status);
+		else
+			dst[k++] = src[(*i)++];
+	}
+	if (src[*i] == '"')
+		(*i)++;
+	return (k);
 }
