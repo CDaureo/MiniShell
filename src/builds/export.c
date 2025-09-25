@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 16:31:08 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 16:36:54 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:56:55 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ static void	process_export_arg(char *arg, t_ms *ms)
 		key = ft_strndup(arg, eq - arg);
 		value = ft_strdup(eq + 1);
 		update_env_var(ms->env_list, key, value);
+		setenv(key, value, 1);
 		free(key);
 		free(value);
 	}
 	else
+	{
 		update_env_var(ms->env_list, arg, NULL);
+		setenv(arg, "", 1);
+	}
 }
 
 int	ft_export(char **argv, t_ms *ms)

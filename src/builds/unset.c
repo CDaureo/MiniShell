@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 16:56:05 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 16:56:11 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 13:21:54 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	ft_unset(char **argv, t_ms *ms)
 	while (argv[i])
 	{
 		unset_var(&ms->env_list, argv[i]);
+		unsetenv(argv[i]);
 		i++;
 	}
 	return (0);
