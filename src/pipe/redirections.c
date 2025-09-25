@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 01:00:10 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/17 01:00:37 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:20:43 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,62 @@ static int	open_infile(char *filename, t_ms *ms)
 	return (0);
 }
 
+static int	handle_heredoc(char *delimiter, t_ms *ms)
+{
+	int		fd;
+	char	*line;
+	char	*temp_file;
+
+	temp_file = "/tmp/heredoc_tmp";
+	fd = open(temp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		perror("heredoc temp file");
+		ms->exit_status = 1;
+		return (-1);
+	}
+	while (1)
+	{
+		line = readline("> ");
+		if (!line || ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+	}
+	close(fd);
+	fd = open(temp_file, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("heredoc temp file");
+		ms->exit_status = 1;
+		return (-1);
+	}
+	if (dup2(fd, STDIN_FILENO) < 0)
+	{
+		perror("dup2");
+		ms->exit_status = 1;
+		close(fd);
+		return (-1);
+	}
+	close(fd);
+	unlink(temp_file);
+	return (0);
+}
+
 static int	handle_redir_token(t_token *redir, t_ms *ms)
 {
 	if (redir->type == TOKEN_REDIRECT)
 		return (open_outfile_trunc(redir->value, ms));
 	else if (redir->type == TOKEN_APPEND)
 		return (open_outfile_append(redir->value, ms));
-	else if (redir->type == TOKEN_INPUT || redir->type == TOKEN_HEREDOC)
+	else if (redir->type == TOKEN_INPUT)
 		return (open_infile(redir->value, ms));
+	else if (redir->type == TOKEN_HEREDOC)
+		return (handle_heredoc(redir->value, ms));
 	return (0);
 }
 

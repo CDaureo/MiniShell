@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:57:55 by simgarci          #+#    #+#             */
-/*   Updated: 2025/09/25 14:16:22 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:13:29 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,7 @@ int	copy_var_value(char *dst, const char *src, int *i, int last_exit_status)
 		var[j++] = src[(*i)++];
 	var[j] = '\0';
 	if (ft_strcmp(var, "_") == 0)
-		{
-			dst[k++] = '$';
-			dst[k++] = '_';
-			return (k);
-	}
+		return (dst[k++] = '$', dst[k++] = '_', k);
 	val = getenv(var);
 	j = 0;
 	if (val)

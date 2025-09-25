@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 18:16:05 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 18:16:37 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:28:42 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	free_simple_cmds(t_simple_cmds *cmds)
 {
 	t_simple_cmds	*tmp;
+	t_token			*redir_tmp;
 	int				i;
 
 	while (cmds)
@@ -29,6 +30,18 @@ void	free_simple_cmds(t_simple_cmds *cmds)
 				i++;
 			}
 			free(cmds->str);
+		}
+		while (cmds->redirections)
+		{
+			redir_tmp = cmds->redirections->next;
+			free(cmds->redirections->value);
+			free(cmds->redirections);
+			cmds->redirections = redir_tmp;
+		}
+		if (cmds->hd_file_name)
+		{
+			unlink(cmds->hd_file_name);
+			free(cmds->hd_file_name);
 		}
 		free(cmds);
 		cmds = tmp;

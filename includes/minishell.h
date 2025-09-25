@@ -6,7 +6,7 @@
 /*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/25 12:34:37 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:28:45 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include "libft.h"
 # include <fcntl.h>
 
@@ -186,6 +188,7 @@ void	parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds, t_ms *ms);
 char	**tokens_to_str(t_token *tokens);
 void	command_tokens(t_simple_cmds **current_cmd, t_token **current_token);
 void	free_token_and_next(t_token *tok, int free_next);
+char	*process_heredoc(const char *delimiter);
 int		copy_var_value(char *dst, const char *src, int *i, \
 	int last_exit_status);
 int		append_quoted(char *dst, const char *src, int *i);
@@ -233,5 +236,13 @@ void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms,
 void	execute_cmds(t_simple_cmds *cmds, t_ms *ms, char *line);
 void	free_exit(t_simple_cmds *cmds, char *line);
 void	closer(int stdout_copy, int stdin_copy);
+/* ************************************************************************** */
+/*						 EXECUTION FUNCTIONS							   */
+/* ************************************************************************** */
+void	restore_std_and_exit(int stdout_copy, int stdin_copy, int exit_code);
+void	exec_child_cmd(t_simple_cmds *cmd, t_ms *ms,
+			int stdout_copy, int stdin_copy);
+void	child_proc(t_simple_cmds *cmd, int prev_fd, int *fd, t_ms *ms);
+pid_t	fork_and_run(t_simple_cmds *cmd, int prev_fd, int *fd, t_ms *ms);
 
 #endif

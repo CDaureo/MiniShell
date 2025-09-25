@@ -17,6 +17,7 @@ SRC = $(SRC_FILES)/main.c \
 	  $(SRC_UTILS)/cmd_utils.c \
 	  $(SRC_UTILS)/ft_add_to_arr.c \
 	  $(SRC_UTILS)/checker_utils.c \
+	  $(SRC_UTILS)/pipex_utils.c \
       $(SRC_ERRORS)/errors.c \
       $(SRC_PARSING)/parse.c \
       $(SRC_PARSING)/handlers.c \
