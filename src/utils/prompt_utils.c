@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 18:53:40 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 18:55:50 by cdaureo-         ###   ########.fr       */
+/*   Created: 2025/09/25 12:09:41 by simgarci          #+#    #+#             */
+/*   Updated: 2025/09/25 12:09:46 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ char	*build_prompt(char *user, char *hostname, char *display_cwd)
 	prompt = malloc(prompt_len);
 	if (!prompt)
 		return (ft_strdup("$ "));
-	snprintf(prompt, prompt_len, "%s@%s:%s$ ", user, hostname, display_cwd);
+	ft_strcpy(prompt, user);
+	ft_strcat(prompt, "@");
+	ft_strcat(prompt, hostname);
+	ft_strcat(prompt, ":");
+	ft_strcat(prompt, display_cwd);
+	ft_strcat(prompt, "$ ");
 	return (prompt);
 }

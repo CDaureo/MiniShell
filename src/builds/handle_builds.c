@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 16:37:40 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 16:47:19 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:51:16 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	expand_exit_status(char **argv, int exit_status)
 {
-	char	status_str[12];
+	char	*status_str;
 	int		i;
 
 	i = 0;
-	snprintf(status_str, sizeof(status_str), "%d", exit_status);
+	status_str = ft_itoa(exit_status);
+	if (!status_str)
+		return ;
 	while (argv && argv[i])
 	{
 		if (ft_strcmp(argv[i], "$?") == 0)
@@ -28,6 +30,7 @@ void	expand_exit_status(char **argv, int exit_status)
 		}
 		i++;
 	}
+	free(status_str);
 }
 
 static int	exec_builtin(char **argv, t_ms *ms)
@@ -60,7 +63,8 @@ static int	exec_external(char **argv)
 	if (pid == 0)
 	{
 		execvp(argv[0], argv);
-		fprintf(stderr, "%s: command not found\n", argv[0]);
+		ft_putstr_fd(argv[0], 2);
+		ft_putendl_fd(": command not found", 2);
 		exit(127);
 	}
 	else if (pid > 0)

@@ -6,11 +6,9 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/22 16:35:47 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:19:39 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -42,7 +40,6 @@
 /* ************************************************************************** */
 /*								ENUMS									  */
 /* ************************************************************************** */
-
 
 typedef enum e_token_type
 {
@@ -215,6 +212,7 @@ int		ft_is_var_char(char c);
 void	ft_add_to_arr(char ***array, t_token *tok, int last_exit_status);
 int		ft_is_word_delim(char c);
 int		ft_is_var_start(char c);
+void	ft_print_error(char *cmd, char *arg);
 
 /* ************************************************************************** */
 /*						 PROMPT FUNCTIONS								   */

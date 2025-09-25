@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 00:57:48 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/17 01:20:35 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:18:33 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	ft_print_error(char *cmd, char *arg)
+{
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	if (arg)
+	{
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd(": ", 2);
+	}
+}
 
 void	free_exit(t_simple_cmds *cmds, char *line)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 16:05:49 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/11 16:29:58 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:47:49 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_cd(char **argv, t_ms *ms)
 		oldpwd[0] = '\0';
 	if (chdir(dir) != 0)
 	{
-		fprintf(stderr, "cd: %s: ", dir);
+		ft_print_error("cd", dir);
 		return (perror(""), 1);
 	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)

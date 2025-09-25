@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:58:09 by simgarci          #+#    #+#             */
-/*   Updated: 2025/09/22 16:35:17 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:22:08 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ t_quote	handle_quotes(const char *input, int *i)
 	if (input[*i] == quote)
 		(*i)++;
 	else
-		fprintf(stderr, "Error: Unmatched %c quote\n", quote);
+	{
+		ft_putstr_fd("Error: Unmatched ", 2);
+		write(2, &quote, 1);
+		ft_putendl_fd(" quote", 2);
+	}
 	return (res);
 }
 
