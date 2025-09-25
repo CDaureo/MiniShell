@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:57:55 by simgarci          #+#    #+#             */
-/*   Updated: 2025/09/22 16:20:53 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/25 13:32:00 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	ft_add_to_arr(char ***array, t_token *tok, int last_exit_status)
 	i = 0;
 	len = get_array_len(*array);
 	to_add = expand_str(tok->value, last_exit_status);
+	if (!to_add || !to_add[0])
+		return (free((char *)to_add));
 	new_array = malloc(sizeof(char *) * (len + 2));
 	if (!new_array)
 		return ;
