@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 00:57:48 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/25 13:09:14 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:51:36 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ void	execute_cmds(t_simple_cmds *cmds, t_ms *ms, char *line)
 	{
 		if (cmds->str && cmds->str[0] && ft_strcmp(cmds->str[0], "exit") == 0)
 			free_exit(cmds, line);
+		if (!cmds->str || !cmds->str[0])
+			return (closer(stdout_copy, stdin_copy), \
+				apply_redirections(cmds, ms, &stdout_copy, &stdin_copy));
 		if (is_builtin(cmds->str[0]))
 		{
 			apply_redirections(cmds, ms, &stdout_copy, &stdin_copy);

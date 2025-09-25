@@ -6,7 +6,7 @@
 /*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:08:43 by simgarci          #+#    #+#             */
-/*   Updated: 2025/09/22 15:58:01 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:33:17 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_simple_cmds	*create_simple_cmd(void)
 	cmd->hd_file_name = NULL;
 	cmd->redirections = NULL;
 	cmd->next = NULL;
-	printf("Creating a new simple command structure.\n");
 	return (cmd);
 }
 
@@ -42,7 +41,6 @@ void	add_simple_cmd(t_simple_cmds **cmds, t_simple_cmds *new_cmd)
 			temp = temp->next;
 		temp->next = new_cmd;
 	}
-	printf("End Add: Command added successfully\n");
 }
 
 static void	command_types(t_simple_cmds **cmds, \

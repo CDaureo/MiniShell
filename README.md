@@ -11,7 +11,14 @@
 - **Implementar redirecciones:**
   - `<` debe redirigir input. [✅]
   - `>` debe redirigir output. [✅]
-  - `<<` debe recibir un delimitador, después leer del input de la fuente actual hasta que una línea que contenga solo el delimitador aparezca. Sin embargo, no necesita actualizar el historial. [✅]
+  - `<<` debe recibir un delimitador, después leer del input de la fuente actual hasta que una línea que contenga solo el delimitador aparezca. Sin embargo, no nece % ./minishell 
+simgarci@c1r14s6.42madrid.com:~/Documents/git/Minishell$ <<a | cat flower
+Creating a new simple command structure.
+End Add: Command added successfully
+Creating a new simple command structure.
+End Add: Command added successfully
+cat: flower: No such file or directory
+simgarci@c1r14s6.42madrid.com:~/Documents/git/Minishell$ sita actualizar el historial. [✅]
   - `>>` debe redirigir el output en modo append. [🔁]
 - [✅] **Implementar pipes** (carácter `|`). El output de cada comando en la pipeline se conecta a través de un pipe al input del siguiente comando.
 - [✅] Gestionar las **variables de entorno** (`$` seguidos de caracteres) que deberán expandirse a sus valores.

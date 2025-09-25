@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:06 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/25 12:34:37 by cdaureo-         ###   ########.fr       */
+/*   Updated: 2025/09/25 17:21:11 by simgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void	parse_simple_cmds(t_token **tokens, t_simple_cmds **cmds, t_ms *ms);
 char	**tokens_to_str(t_token *tokens);
 void	command_tokens(t_simple_cmds **current_cmd, t_token **current_token);
 void	free_token_and_next(t_token *tok, int free_next);
+char	*process_heredoc(const char *delimiter);
 int		copy_var_value(char *dst, const char *src, int *i, \
 	int last_exit_status);
 int		append_quoted(char *dst, const char *src, int *i);
@@ -200,6 +201,9 @@ char	*get_cmd_path(char *cmd, char **envp);
 void	free_pathstr(char **arr);
 void	apply_redirections(t_simple_cmds *cmd, t_ms *ms,
 			int *stdout_copy, int *stdin_copy);
+void	preprocess_heredocs(t_simple_cmds *cmds);
+void	child_proc(t_simple_cmds *cmd, int prev_fd, int *fd, t_ms *ms);
+void	restore_std_and_exit(int stdout_copy, int stdin_copy, int exit_code);
 
 /* ************************************************************************** */
 /*						 LIBFT-STYLE FUNCTIONS							 */
@@ -233,5 +237,8 @@ void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms,
 void	execute_cmds(t_simple_cmds *cmds, t_ms *ms, char *line);
 void	free_exit(t_simple_cmds *cmds, char *line);
 void	closer(int stdout_copy, int stdin_copy);
+int		open_outfile_trunc(char *filename, t_ms *ms);
+int		open_outfile_append(char *filename, t_ms *ms);
+int		open_infile(char *filename, t_ms *ms);
 
 #endif
