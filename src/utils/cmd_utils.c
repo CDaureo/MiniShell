@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 00:57:48 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/25 12:18:33 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:38:01 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms,
 	pid_t	pid;
 	int		status;
 
-	(void)ms;
 	(void)stdout_copy;
 	(void)stdin_copy;
 	pid = fork();
@@ -58,6 +57,15 @@ void	execute_external_cmd(t_simple_cmds *cmds, t_ms *ms,
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			ms->exit_status = WEXITSTATUS(status);
+		else
+			ms->exit_status = 1;
+	}
+	else
+	{
+		perror("fork");
+		ms->exit_status = 1;
 	}
 }
 

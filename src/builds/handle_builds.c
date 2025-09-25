@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 16:37:40 by cdaureo-          #+#    #+#             */
-/*   Updated: 2025/09/25 11:51:16 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:43:15 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,13 @@ int	handle_builds(char **argv, t_ms *ms)
 	expand_exit_status(argv, ms->exit_status);
 	ret = exec_builtin(argv, ms);
 	if (ret != -1)
+	{
 		ms->exit_status = ret;
+		return (ret);
+	}
 	else
+	{
 		ms->exit_status = exec_external(argv);
-	return (1);
+		return (ms->exit_status);
+	}
 }
