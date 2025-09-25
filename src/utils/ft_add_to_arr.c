@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_to_arr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simgarci <simgarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdaureo- <cdaureo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:57:55 by simgarci          #+#    #+#             */
-/*   Updated: 2025/09/22 16:20:53 by simgarci         ###   ########.fr       */
+/*   Updated: 2025/09/25 13:27:07 by cdaureo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ int	copy_var_value(char *dst, const char *src, int *i, int last_exit_status)
 	while (src[*i] && j < 255 && ft_is_var_char(src[*i]))
 		var[j++] = src[(*i)++];
 	var[j] = '\0';
+	if (ft_strcmp(var, "_") == 0)
+		{
+			dst[k++] = '$';
+			dst[k++] = '_';
+			return (k);
+	}
 	val = getenv(var);
 	j = 0;
 	if (val)
